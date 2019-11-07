@@ -6,6 +6,9 @@ and 3.1 of the MQTT protocol. It also includes a C and C++ client library, and
 the `mosquitto_pub` and `mosquitto_sub` utilities for publishing and
 subscribing.
 
+## Mac OSX Stuff
+`cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/1.0.2r -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/1.0.2r/lib .`
+
 ## Links
 
 See the following links for more information on MQTT:
