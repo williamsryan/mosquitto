@@ -7,7 +7,7 @@ the `mosquitto_pub` and `mosquitto_sub` utilities for publishing and
 subscribing.
 
 ## Mac OSX Stuff
-`cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/1.0.2r -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/1.0.2r/lib .`
+`cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/<VERSION_NUM> -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/<VERSION_NUM>/lib .`
 
 ## Links
 
