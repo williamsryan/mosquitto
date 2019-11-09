@@ -305,10 +305,10 @@ ifeq ($(WITH_BUNDLED_DEPS),yes)
 endif
 
 ifeq ($(WITH_COVERAGE),yes)
-	BROKER_CFLAGS:=$(BROKER_CFLAGS) -coverage
+	BROKER_CFLAGS:=$(BROKER_CFLAGS) -fprofile-arcs -ftest-coverage
 	BROKER_LDFLAGS:=$(BROKER_LDFLAGS) -coverage
-	LIB_CFLAGS:=$(LIB_CFLAGS) -coverage
-	LIB_LDFLAGS:=$(LIB_LDFLAGS) -coverage
-	CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -coverage
+	LIB_CFLAGS:=$(LIB_CFLAGS) -fprofile-arcs -ftest-coverage
+	LIB_LDFLAGS:=$(LIB_LDFLAGS) -lgcov --coverage
+	CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -fprofile-arcs -ftest-coverage
 	CLIENT_LDFLAGS:=$(CLIENT_LDFLAGS) -coverage
 endif
