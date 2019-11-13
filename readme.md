@@ -30,6 +30,12 @@ There is also a public test server available at <https://test.mosquitto.org/>
 See <https://mosquitto.org/download/> for details on installing binaries for
 various platforms.
 
+## Using KLEE Against Mosquitto
+
+``` bash
+klee -link-llvm-lib=../lib/libmosquitto.so.1 -link-llvm-lib=net.bc -link-llvm-lib=sys_tree.bc --libc=uclibc --posix-runtime --solver-backend=z3 mosquitto.bc --sym-args 5 5 5 --sym-files 2 8 --max-fail 1 --max-time=60
+```
+
 ## Quick start
 
 If you have installed a binary package the broker should have been started
