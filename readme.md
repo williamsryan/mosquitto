@@ -33,7 +33,14 @@ various platforms.
 ## Using KLEE Against Mosquitto
 
 ``` bash
-klee -link-llvm-lib=../lib/libmosquitto.so.1 -link-llvm-lib=net.bc -link-llvm-lib=sys_tree.bc --libc=uclibc --posix-runtime --solver-backend=z3 mosquitto.bc --sym-args 5 5 5 --sym-files 2 8 --max-fail 1 --max-time=60
+$klee -link-llvm-lib=../lib/libmosquitto.so.1 -link-llvm-lib=net.bc -link-llvm-lib=sys_tree.bc --libc=uclibc --posix-runtime --solver-backend=z3 mosquitto.bc --sym-args 5 5 5 --sym-files 2 8 --max-fail 1 --max-time=60
+```
+
+### Replaying KLEE Tests
+Once we have generated the tests symbolically, run them against the binary with coverage instrumentation.
+
+``` bash
+$klee-replay ./mosquitto ../klee_tests/test000001.ktest
 ```
 
 ## Quick start
