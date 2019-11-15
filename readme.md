@@ -8,7 +8,7 @@ subscribing.
 
 ## Mac OSX Stuff
 ``` bash
-$`cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/<VERSION_NUM> -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/<VERSION_NUM>/lib .
+$cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/<VERSION_NUM> -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/<VERSION_NUM>/lib .
 ```
 
 ## Links
