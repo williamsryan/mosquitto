@@ -125,7 +125,7 @@ ifeq ($(UNAME),SunOS)
 		CFLAGS?=-Wall -ggdb -O2
 	endif
 else
-  	CC=cc
+  	CC=clang
 	CFLAGS?=-Wall -ggdb -O2 #-L /home/ryan/git/klee/build/Debug+Asserts/lib -lkleeRuntest #-c -emit-llvm
 endif
 
