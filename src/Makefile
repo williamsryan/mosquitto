@@ -289,7 +289,7 @@ uninstall :
 	-rm -f "${DESTDIR}${prefix}/bin/mosquitto_passwd"
 
 clean : 
-	-rm -rf *.bc mosquitto mosquitto_passwd *.gcda *.gcno klee-*
+	-rm -rf *.bc mosquitto mosquitto_passwd *.gcda *.gcno klee-* *.o
 
 reallyclean : clean
 	-rm -rf *.bcrig *.db
