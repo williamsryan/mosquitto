@@ -7,7 +7,9 @@ the `mosquitto_pub` and `mosquitto_sub` utilities for publishing and
 subscribing.
 
 ## Mac OSX Stuff
-`cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/1.0.2r -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/1.0.2r/lib .`
+``` bash
+$cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/<VERSION_NUM> -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/<VERSION_NUM>/lib .
+```
 
 ## Links
 
@@ -29,6 +31,19 @@ There is also a public test server available at <https://test.mosquitto.org/>
 
 See <https://mosquitto.org/download/> for details on installing binaries for
 various platforms.
+
+## Using KLEE Against Mosquitto
+
+``` bash
+$klee -emit-all-errors -only-output-states-covering-new -link-llvm-lib=../lib/libmosquitto.so.1 -link-llvm-lib=net.bc -link-llvm-lib=sys_tree.bc --libc=uclibc --posix-runtime --solver-backend=z3 mosquitto.bc --sym-args 0 3 4 --sym-files 2 4 --max-fail 1 --max-time=60
+```
+
+### Replaying KLEE Tests
+Once we have generated the tests symbolically, run them against the binary with coverage instrumentation.
+
+``` bash
+$klee-replay ./mosquitto ../klee_tests/test000001.ktest
+```
 
 ## Quick start
 
