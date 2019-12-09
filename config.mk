@@ -125,7 +125,7 @@ ifeq ($(UNAME),SunOS)
 		CFLAGS?=-Wall -ggdb -O2
 	endif
 else
-  	CC=clang
+  	CC=cc
 	CFLAGS?=-coverage -Wall -ggdb #-O2 #-L /home/ryan/git/klee/build/Debug+Asserts/lib -lkleeRuntest #-c -emit-llvm
 	#LDFLAGS:=$(LDFLAGS) -coverage
 	#LDADD:=$(LDADD) -lcunit
@@ -308,10 +308,10 @@ ifeq ($(WITH_BUNDLED_DEPS),yes)
 endif
 
 ifeq ($(WITH_COVERAGE),yes)
-	#BROKER_CFLAGS:=$(BROKER_CFLAGS) -fprofile-arcs -ftest-coverage
+	BROKER_CFLAGS:=$(BROKER_CFLAGS) -fprofile-arcs -ftest-coverage
 	BROKER_LDFLAGS:=$(BROKER_LDFLAGS) -coverage
-	#LIB_CFLAGS:=$(LIB_CFLAGS) -fprofile-arcs -ftest-coverage
+	LIB_CFLAGS:=$(LIB_CFLAGS) -fprofile-arcs -ftest-coverage
 	LIB_LDFLAGS:=$(LIB_LDFLAGS) -lgcov --coverage
-	#CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -fprofile-arcs -ftest-coverage
+	CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -fprofile-arcs -ftest-coverage
 	CLIENT_LDFLAGS:=$(CLIENT_LDFLAGS) -coverage
 endif

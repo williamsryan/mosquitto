@@ -292,7 +292,7 @@ uninstall :
 	-rm -f "${DESTDIR}${prefix}/bin/mosquitto_passwd"
 
 clean : 
-	-rm -f *.o mosquitto mosquitto_passwd *.gcda *.gcno *.gcov
+	-rm -rf *.o mosquitto mosquitto_passwd *.gcda *.gcno *.gcov coverage.info html/
 
 reallyclean : clean
 	-rm -rf *.orig *.db
