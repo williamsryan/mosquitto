@@ -21,32 +21,32 @@
 # Disabling this will also mean that passwords must be stored in plain text. It
 # is strongly recommended that you only disable WITH_TLS if you are not using
 # password authentication at all.
-WITH_TLS:=yes
+#WITH_TLS:=yes
 
 # Comment out to disable TLS/PSK support in the broker and client. Requires
 # WITH_TLS=yes.
 # This must be disabled if using openssl < 1.0.
-WITH_TLS_PSK:=yes
+#WITH_TLS_PSK:=yes
 
 # Comment out to disable client threading support.
-WITH_THREADING:=yes
+#WITH_THREADING:=yes
 
 # Comment out to remove bridge support from the broker. This allow the broker
 # to connect to other brokers and subscribe/publish to topics. You probably
 # want to leave this included unless you want to save a very small amount of
 # memory size and CPU time.
-WITH_BRIDGE:=yes
+#WITH_BRIDGE:=yes
 
 # Comment out to remove persistent database support from the broker. This
 # allows the broker to store retained messages and durable subscriptions to a
 # file periodically and on shutdown. This is usually desirable (and is
 # suggested by the MQTT spec), but it can be disabled if required.
-WITH_PERSISTENCE:=yes
+#WITH_PERSISTENCE:=yes
 
 # Comment out to remove memory tracking support from the broker. If disabled,
 # mosquitto won't track heap memory usage nor export '$SYS/broker/heap/current
 # size', but will use slightly less memory and CPU time.
-WITH_MEMORY_TRACKING:=yes
+#WITH_MEMORY_TRACKING:=yes
 
 # Compile with database upgrading support? If disabled, mosquitto won't
 # automatically upgrade old database versions.
@@ -55,32 +55,32 @@ WITH_MEMORY_TRACKING:=yes
 
 # Comment out to remove publishing of the $SYS topic hierarchy containing
 # information about the broker state.
-WITH_SYS_TREE:=yes
+#WITH_SYS_TREE:=yes
 
 # Build with systemd support. If enabled, mosquitto will notify systemd after
 # initialization. See README in service/systemd/ for more information.
-WITH_SYSTEMD:=no
+#WITH_SYSTEMD:=no
 
 # Build with SRV lookup support.
-WITH_SRV:=no
+#WITH_SRV:=no
 
 # Build with websockets support on the broker.
-WITH_WEBSOCKETS:=no
+#WITH_WEBSOCKETS:=no
 
 # Use elliptic keys in broker
-WITH_EC:=yes
+#WITH_EC:=yes
 
 # Build man page documentation by default.
-WITH_DOCS:=yes
+#WITH_DOCS:=yes
 
 # Build with client support for SOCK5 proxy.
-WITH_SOCKS:=yes
+#WITH_SOCKS:=yes
 
 # Strip executables and shared libraries on install.
-WITH_STRIP:=no
+#WITH_STRIP:=no
 
 # Build static libraries
-WITH_STATIC_LIBRARIES:=no
+#WITH_STATIC_LIBRARIES:=no
 
 # Build shared libraries
 WITH_SHARED_LIBRARIES:=yes
@@ -89,13 +89,13 @@ WITH_SHARED_LIBRARIES:=yes
 #WITH_ADNS:=yes
 
 # Build with epoll support.
-WITH_EPOLL:=yes
+#WITH_EPOLL:=yes
 
 # Build with bundled uthash.h
-WITH_BUNDLED_DEPS:=yes
+#WITH_BUNDLED_DEPS:=yes
 
 # Build with coverage options
-WITH_COVERAGE:=no
+#WITH_COVERAGE:=no
 
 # =============================================================================
 # End of user configuration
