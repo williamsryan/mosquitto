@@ -1,0 +1,5 @@
+digraph "CFG for 'net__broker_init' function" {
+	label="CFG for 'net__broker_init' function";
+
+	Node0x100a4f0 [shape=record,label="{%0:\l  %1 = tail call i32 @socket(i32 2, i32 1, i32 0) #8, !dbg !147\l  store i32 %1, i32* @spare_sock, align 4, !dbg !148, !tbaa !149\l  %2 = tail call i32 @net__init() #8, !dbg !153\l  ret void, !dbg !154\l}"];
+}

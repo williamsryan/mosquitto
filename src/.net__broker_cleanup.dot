@@ -1,0 +1,10 @@
+digraph "CFG for 'net__broker_cleanup' function" {
+	label="CFG for 'net__broker_cleanup' function";
+
+	Node0x1038120 [shape=record,label="{%0:\l  %1 = load i32, i32* @spare_sock, align 4, !dbg !147, !tbaa !149\l  %2 = icmp eq i32 %1, -1, !dbg !153\l  br i1 %2, label %5, label %3, !dbg !154\l|{<s0>T|<s1>F}}"];
+	Node0x1038120:s0 -> Node0x1039ae0;
+	Node0x1038120:s1 -> Node0x1039a90;
+	Node0x1039a90 [shape=record,label="{%3:\l3:                                                \l  %4 = tail call i32 @close(i32 %1) #8, !dbg !155\l  store i32 -1, i32* @spare_sock, align 4, !dbg !157, !tbaa !149\l  br label %5, !dbg !158\l}"];
+	Node0x1039a90 -> Node0x1039ae0;
+	Node0x1039ae0 [shape=record,label="{%5:\l5:                                                \l  tail call void @net__cleanup() #8, !dbg !159\l  ret void, !dbg !160\l}"];
+}
