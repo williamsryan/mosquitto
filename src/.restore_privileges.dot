@@ -1,0 +1,18 @@
+digraph "CFG for 'restore_privileges' function" {
+	label="CFG for 'restore_privileges' function";
+
+	Node0x256f2a0 [shape=record,label="{%0:\l  %1 = tail call i32 @getuid() #10, !dbg !794\l  %2 = icmp eq i32 %1, 0, !dbg !796\l  br i1 %2, label %3, label %19, !dbg !797\l|{<s0>T|<s1>F}}"];
+	Node0x256f2a0:s0 -> Node0x2570960;
+	Node0x256f2a0:s1 -> Node0x2570aa0;
+	Node0x2570960 [shape=record,label="{%3:\l3:                                                \l  %4 = tail call i32 @setegid(i32 0) #10, !dbg !798\l  call void @llvm.dbg.value(metadata i32 %4, metadata !793, metadata\l... !DIExpression()), !dbg !800\l  %5 = icmp eq i32 %4, -1, !dbg !801\l  br i1 %5, label %6, label %11, !dbg !803\l|{<s0>T|<s1>F}}"];
+	Node0x2570960:s0 -> Node0x25709b0;
+	Node0x2570960:s1 -> Node0x2570a00;
+	Node0x25709b0 [shape=record,label="{%6:\l6:                                                \l  %7 = tail call i32* @__errno_location() #11, !dbg !804\l  %8 = load i32, i32* %7, align 4, !dbg !804, !tbaa !806\l  %9 = tail call i8* @strerror(i32 %8) #10, !dbg !810\l  call void @llvm.dbg.value(metadata i8* %9, metadata !792, metadata\l... !DIExpression()), !dbg !800\l  %10 = tail call i32 (%struct.mosquitto*, i32, i8*, ...)\l... @log__printf(%struct.mosquitto* null, i32 8, i8* getelementptr inbounds ([51\l... x i8], [51 x i8]* @.str.8, i64 0, i64 0), i8* %9) #10, !dbg !811\l  br label %19, !dbg !812\l}"];
+	Node0x25709b0 -> Node0x2570aa0;
+	Node0x2570a00 [shape=record,label="{%11:\l11:                                               \l  %12 = tail call i32 @seteuid(i32 0) #10, !dbg !813\l  call void @llvm.dbg.value(metadata i32 %12, metadata !793, metadata\l... !DIExpression()), !dbg !800\l  %13 = icmp eq i32 %12, -1, !dbg !814\l  br i1 %13, label %14, label %19, !dbg !816\l|{<s0>T|<s1>F}}"];
+	Node0x2570a00:s0 -> Node0x2570a50;
+	Node0x2570a00:s1 -> Node0x2570aa0;
+	Node0x2570a50 [shape=record,label="{%14:\l14:                                               \l  %15 = tail call i32* @__errno_location() #11, !dbg !817\l  %16 = load i32, i32* %15, align 4, !dbg !817, !tbaa !806\l  %17 = tail call i8* @strerror(i32 %16) #10, !dbg !819\l  call void @llvm.dbg.value(metadata i8* %17, metadata !792, metadata\l... !DIExpression()), !dbg !800\l  %18 = tail call i32 (%struct.mosquitto*, i32, i8*, ...)\l... @log__printf(%struct.mosquitto* null, i32 8, i8* getelementptr inbounds ([51\l... x i8], [51 x i8]* @.str.9, i64 0, i64 0), i8* %17) #10, !dbg !820\l  br label %19, !dbg !821\l}"];
+	Node0x2570a50 -> Node0x2570aa0;
+	Node0x2570aa0 [shape=record,label="{%19:\l19:                                               \l  %20 = phi i32 [ 1, %6 ], [ 1, %14 ], [ 0, %11 ], [ 0, %0 ], !dbg !800\l  ret i32 %20, !dbg !822\l}"];
+}

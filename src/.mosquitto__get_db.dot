@@ -1,0 +1,5 @@
+digraph "CFG for 'mosquitto__get_db' function" {
+	label="CFG for 'mosquitto__get_db' function";
+
+	Node0x25334e0 [shape=record,label="{%0:\l  ret %struct.mosquitto_db* @int_db, !dbg !795\l}"];
+}
