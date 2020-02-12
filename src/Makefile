@@ -1,6 +1,11 @@
 include ../config.mk
 
-.PHONY: all install uninstall clean reallyclean
+.PHONY: all install uninstall coverage clean reallyclean
+
+CPPFLAGS:=$(CPPFLAGS) -I../.. -I../../lib -I../../src -I../../src/deps
+CFLAGS:=$(CFLAGS) -coverage -Wall -ggdb
+LDFLAGS:=$(LDFLAGS) -coverage
+LDADD:=$(LDADD) -lcunit
 
 #CFLAGS+=-coverage
 
@@ -289,7 +294,11 @@ uninstall :
 	-rm -f "${DESTDIR}${prefix}/bin/mosquitto_passwd"
 
 clean : 
-	-rm -rf *.bc mosquitto mosquitto_passwd *.gcda *.gcno klee-*
+	-rm -rf *.o mosquitto mosquitto_passwd *.gcda *.gcno *.gcov coverage.info html *.debug *.dot *.cfg *.c.*
 
 reallyclean : clean
-	-rm -rf *.bcrig *.db
+	-rm -rf *.orig *.db
+
+coverage :
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output-directory html
