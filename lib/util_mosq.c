@@ -363,6 +363,7 @@ int mosquitto__set_state(struct mosquitto *mosq, enum mosquitto_client_state sta
 #endif
 	{
 		mosq->state = state;
+		log__printf(NULL, MOSQ_LOG_NOTICE, "State: %u", state);
 	}
 	pthread_mutex_unlock(&mosq->state_mutex);
 
