@@ -112,6 +112,12 @@ int packet__read_binary(struct mosquitto__packet *packet, uint8_t **data, int *l
 		memcpy(*data, &(packet->payload[packet->pos]), slen);
 		((uint8_t *)(*data))[slen] = '\0';
 		packet->pos += slen;
+
+		// Tests - RPW.
+		#ifdef WITH_RPW_DBG
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Read packet: %s", *data);
+		#endif
+		// End tests.
 	}else{
 		return MOSQ_ERR_NOMEM;
 	}

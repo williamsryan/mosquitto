@@ -58,8 +58,10 @@ int handle__disconnect(struct mosquitto_db *db, struct mosquitto *context)
 	if(context->in_packet.pos != context->in_packet.remaining_length){
 		return MOSQ_ERR_PROTOCOL;
 	}
-	// Test - RPW>
+	// Test - RPW.
+	#ifdef WITH_RPW_DBG
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Received DISCONNECT from %s", context->id);
+	#endif
 	// End test.
 	if(context->protocol == mosq_p_mqtt311 || context->protocol == mosq_p_mqtt5){
 		if((context->in_packet.command&0x0F) != 0x00){

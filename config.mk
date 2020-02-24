@@ -97,6 +97,9 @@ WITH_SHARED_LIBRARIES:=yes
 # Build with coverage options
 WITH_COVERAGE:=yes
 
+# Build with stateful debug statements/etc.
+WITH_RPW_DBG=yes
+
 # =============================================================================
 # End of user configuration
 # =============================================================================
@@ -314,4 +317,9 @@ ifeq ($(WITH_COVERAGE),yes)
 	LIB_LDFLAGS:=$(LIB_LDFLAGS) -lgcov --coverage
 	CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -fprofile-arcs -ftest-coverage
 	CLIENT_LDFLAGS:=$(CLIENT_LDFLAGS) -coverage
+endif
+
+ifeq ($(WITH_RPW_DBG),yes)
+	BROKER_CFLAGS:=$(BROKER_CFLAGS) -DWITH_RPW_DBG
+	BROKER_CPPFLAGS:=$(BROKER_CPPFLAGS) -DWITH_RPW_DBG
 endif

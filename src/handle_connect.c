@@ -415,7 +415,9 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	protocol_name[slen] = '\0';
 
 	// Tests - RPW.
+	#ifdef WITH_RPW_DBG
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Protocol name: %s", protocol_name);
+	#endif
 	// End tests.
 
 	if(packet__read_byte(&context->in_packet, &protocol_version)){
