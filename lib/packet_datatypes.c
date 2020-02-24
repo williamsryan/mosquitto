@@ -52,6 +52,8 @@ int packet__read_byte(struct mosquitto__packet *packet, uint8_t *byte)
 	*byte = packet->payload[packet->pos];
 	packet->pos++;
 
+	//log__printf(NULL, MOSQ_LOG_NOTICE, "Packet byte: %s", byte);
+
 	return MOSQ_ERR_SUCCESS;
 }
 
