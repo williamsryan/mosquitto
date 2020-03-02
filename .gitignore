@@ -17,6 +17,7 @@ c/*.test
 cpp/*.test
 
 build/
+klee-tests/
 
 client/mosquitto_pub
 client/mosquitto_rr
