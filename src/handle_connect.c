@@ -363,7 +363,7 @@ error_cleanup:
  */
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context) {
     // This will be some "key" that is agreed upon at handshake time to determine client/broker version type.
-    int id = 1338;
+    int id = 1337;
     handle__connect2(db, context, id);
 }
 
