@@ -361,13 +361,13 @@ error_cleanup:
  * @param db
  * @param context
  */
-int handle__connect(struct mosquitto_db *db, struct mosquitto *context) {
+/*int handle__connect2(struct mosquitto_db *db, struct mosquitto *context) {
     // This will be some "key" that is agreed upon at handshake time to determine client/broker version type.
     int id = 1337;
     handle__connect2(db, context, id);
-}
+}*/
 
-int handle__connect2(struct mosquitto_db *db, struct mosquitto *context, int version)
+int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int version)
 {
 	char protocol_name[7];
 	uint8_t protocol_version;
@@ -399,6 +399,7 @@ int handle__connect2(struct mosquitto_db *db, struct mosquitto *context, int ver
 		return MOSQ_ERR_INVAL;
 	}
 
+	/* Manually-created check for the added dummy transformation. */
 	if(version != 1337) {
 	    log__printf(NULL, MOSQ_LOG_NOTICE, "Client::Broker mismatch. Disconnecting.");
 	    goto handle_connect_error;
@@ -890,6 +891,9 @@ handle_connect_error:
 	mosquitto__free(client_id);
 	mosquitto__free(username);
 	mosquitto__free(password);
+
+	// This will send DISCONNECT to the client.
+	//send__disconnect(context, 0, NULL);
 	if(will_struct){
 		mosquitto_property_free_all(&will_struct->properties);
 		mosquitto__free(will_struct->msg.payload);
