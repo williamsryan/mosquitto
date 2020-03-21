@@ -128,6 +128,8 @@ typedef union {
 #define UHPA_FREE_PAYLOAD(A) UHPA_FREE((A)->payload, (A)->payloadlen)
 #define UHPA_MOVE_PAYLOAD(DEST, SRC) UHPA_MOVE((DEST)->payload, (SRC)->payload, (SRC)->payloadlen)
 
+#define UHPA_ACCESS_TOPIC(A) UHPA_ACCESS((A)->topic, (A)->topic_len+1)
+
 /* ========================================
  * End UHPA data types
  * ======================================== */
