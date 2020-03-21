@@ -402,7 +402,8 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int vers
 	/* Manually-created check for the added dummy transformation. */
 	if(version != 1337) {
 	    log__printf(NULL, MOSQ_LOG_NOTICE, "Client::Broker mismatch. Disconnecting.");
-	    goto handle_connect_error;
+	    // Ignore this for now.
+	    //goto handle_connect_error;
 	}
 
 	/* Don't accept multiple CONNECT commands. */
