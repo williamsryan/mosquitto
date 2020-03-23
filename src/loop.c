@@ -63,6 +63,10 @@ extern bool flag_db_backup;
 extern bool flag_tree_print;
 extern int run;
 
+#ifdef WITH_RPW_DBG
+int tc = 0;
+#endif
+
 #ifdef WITH_EPOLL
 static void loop_handle_reads_writes(struct mosquitto_db *db, mosq_sock_t sock, uint32_t events);
 #else
@@ -209,6 +213,9 @@ int mosquitto_main_loop(struct mosquitto_db *db, mosq_sock_t *listensock, int li
 #endif
 
 	while(run){
+#ifdef WITH_RPW_DBG
+		if (tc > 20) break;
+#endif
 		context__free_disused(db);
 #ifdef WITH_SYS_TREE
 		if(db->config->sys_interval > 0){
@@ -218,7 +225,6 @@ int mosquitto_main_loop(struct mosquitto_db *db, mosq_sock_t *listensock, int li
 
 #ifndef WITH_EPOLL
 		memset(pollfds, -1, sizeof(struct pollfd)*pollfd_max);
-
 		pollfd_index = 0;
 		for(i=0; i<listensock_count; i++){
 			pollfds[pollfd_index].fd = listensock[i];
@@ -628,6 +634,10 @@ int mosquitto_main_loop(struct mosquitto_db *db, mosq_sock_t *listensock, int li
 		if(db->config->have_websockets_listener){
 			temp__expire_websockets_clients(db);
 		}
+#endif
+#ifdef WITH_RPW_DBG
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Exiting in: %d iterations", (20-tc));
+		tc++;
 #endif
 	}
 
