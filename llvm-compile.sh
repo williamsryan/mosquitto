@@ -2,7 +2,8 @@
 
 # Compile all the subdirs applicable code to LLVM IR.
 # lib/ will have errors, but are safe to ignore for our purposes.
-DIR=$PWD
+#DIR=$PWD
+#CC=wllvm
 
 make binary -j
 (cd src ; make -j) || exit 1
