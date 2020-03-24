@@ -79,4 +79,4 @@ uninstall :
 reallyclean : clean
 
 clean : 
-	-rm -f *.bc mosquitto_pub mosquitto_sub mosquitto_rr *.gcda *.gcno
+	rm -rf *.bc mosquitto_pub mosquitto_sub mosquitto_rr *.gcda *.gcno klee-*
