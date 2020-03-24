@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2009-2019 Roger Light <roger@atchoo.org>
+Copyright (c) 2009-2020 Roger Light <roger@atchoo.org>
 
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
@@ -160,6 +160,9 @@ int connect__on_authorised(struct mosquitto_db *db, struct mosquitto *context, v
 			}
 		}
 
+		if(context->clean_start == true){
+			sub__clean_session(db, found_context);
+		}
 		session_expiry__remove(found_context);
 		will_delay__remove(found_context);
 		will__clear(found_context);

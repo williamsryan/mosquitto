@@ -22,6 +22,8 @@ klee_tests/
 client/mosquitto_pub
 client/mosquitto_rr
 client/mosquitto_sub
+client/testing
+client/testing.c
 
 cov-int/
 

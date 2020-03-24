@@ -82,6 +82,11 @@
 # Build static libraries
 #WITH_STATIC_LIBRARIES:=no
 
+# Use this variable to add extra library dependencies when building the clients
+# with the static libmosquitto library. This may be required on some systems
+# where e.g. -lz or -latomic are needed for openssl.
+#CLIENT_STATIC_LDADD:=
+
 # Build shared libraries
 WITH_SHARED_LIBRARIES:=yes
 
@@ -91,8 +96,8 @@ WITH_SHARED_LIBRARIES:=yes
 # Build with epoll support.
 #WITH_EPOLL:=yes
 
-# Build with bundled uthash.h
-#WITH_BUNDLED_DEPS:=yes
+# Build with bundled uthash.h / utlist.h.
+WITH_BUNDLED_DEPS:=yes
 
 # Build with coverage options
 WITH_COVERAGE:=yes
@@ -107,7 +112,7 @@ WITH_RPW_DBG=yes
 
 # Also bump lib/mosquitto.h, CMakeLists.txt,
 # installer/mosquitto.nsi, installer/mosquitto64.nsi
-VERSION=1.6.7
+VERSION=1.6.9
 
 # Client library SO version. Bump if incompatible API/ABI changes are made.
 SOVERSION=1
@@ -136,7 +141,10 @@ endif
 
 STATIC_LIB_DEPS:=
 
-LIB_CPPFLAGS=$(CPPFLAGS) -I. -I.. -I../lib -I../src/deps
+LIB_CPPFLAGS=$(CPPFLAGS) -I. -I.. -I../lib
+ifeq ($(WITH_BUNDLED_DEPS),yes)
+	LIB_CPPFLAGS:=$(LIB_CPPFLAGS) -I../src/deps
+endif
 LIB_CFLAGS:=$(CFLAGS)
 LIB_CXXFLAGS:=$(CXXFLAGS)
 LIB_LDFLAGS:=$(LDFLAGS)
@@ -323,3 +331,7 @@ ifeq ($(WITH_RPW_DBG),yes)
 	BROKER_CFLAGS:=$(BROKER_CFLAGS) -DWITH_RPW_DBG
 	BROKER_CPPFLAGS:=$(BROKER_CPPFLAGS) -DWITH_RPW_DBG
 endif
+
+#BROKER_LDADD:=${BROKER_LDADD} ${LDADD}
+#CLIENT_LDADD:=${CLIENT_LDADD} ${LDADD}
+#PASSWD_LDADD:=${PASSWD_LDADD} ${LDADD}
