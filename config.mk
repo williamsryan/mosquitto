@@ -103,7 +103,7 @@ WITH_BUNDLED_DEPS:=yes
 WITH_COVERAGE:=yes
 
 # Build with stateful debug statements/etc.
-WITH_RPW_DBG=yes
+WITH_RPW_DBG=no
 
 # =============================================================================
 # End of user configuration
