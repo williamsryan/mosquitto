@@ -673,8 +673,8 @@ static int pwfile__parse(const char *file, struct mosquitto__unpwd **root)
 
 	while(!feof(pwfile)){
 		if(fgets(buf, 256, pwfile)){
-			if(buf[0] == '#') continue;
-			if(!strchr(buf, ':')) continue;
+			// if(buf[0] == '#') continue;
+			// if(!strchr(buf, ':')) continue;
 
 			username = strtok_r(buf, ":", &saveptr);
 			if(username){
@@ -709,12 +709,13 @@ static int pwfile__parse(const char *file, struct mosquitto__unpwd **root)
 						len = strlen(unpwd->password);
 					}
 
-					HASH_ADD_KEYPTR(hh, *root, unpwd->username, strlen(unpwd->username), unpwd);
-				}else{
-					log__printf(NULL, MOSQ_LOG_NOTICE, "Warning: Invalid line in password file '%s': %s", file, buf);
-					mosquitto__free(unpwd->username);
-					mosquitto__free(unpwd);
+				// 	HASH_ADD_KEYPTR(hh, *root, unpwd->username, strlen(unpwd->username), unpwd);
+				// }else{
+				// 	log__printf(NULL, MOSQ_LOG_NOTICE, "Warning: Invalid line in password file '%s': %s", file, buf);
+				// 	mosquitto__free(unpwd->username);
+				// 	mosquitto__free(unpwd);
 				}
+				HASH_ADD_KEYPTR(hh, *root, unpwd->username, strlen(unpwd->username), unpwd);
 			}
 		}
 	}
@@ -754,39 +755,60 @@ static int unpwd__decode_passwords(struct mosquitto__unpwd **unpwd)
 				token = strtok(NULL, "$");
 				if(token){
 					rc = base64__decode(token, &salt, &salt_len);
-					if(rc == MOSQ_ERR_SUCCESS && salt_len == 12){
-						u->salt = salt;
-						u->salt_len = salt_len;
-						token = strtok(NULL, "$");
-						if(token){
-							rc = base64__decode(token, &password, &password_len);
-							if(rc == MOSQ_ERR_SUCCESS && password_len == 64){
-								mosquitto__free(u->password);
-								u->password = (char *)password;
-								u->password_len = password_len;
-							}else{
-								log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to decode password for user %s, removing entry.", u->username);
-								unpwd__free_item(unpwd, u);
-							}
-						}else{
-							log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s, removing entry.", u->username);
-							unpwd__free_item(unpwd, u);
+					if(rc){
+						log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to decode password salt for user %s.", u->username);
+						return MOSQ_ERR_INVAL;
+					}
+					u->salt = salt;
+					u->salt_len = salt_len;
+					token = strtok(NULL, "$");
+					if(token){
+						rc = base64__decode(token, &password, &password_len);
+						if(rc){
+							log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to decode password for user %s.", u->username);
+							return MOSQ_ERR_INVAL;
+					// if(rc == MOSQ_ERR_SUCCESS && salt_len == 12){
+					// 	u->salt = salt;
+					// 	u->salt_len = salt_len;
+					// 	token = strtok(NULL, "$");
+					// 	if(token){
+					// 		rc = base64__decode(token, &password, &password_len);
+					// 		if(rc == MOSQ_ERR_SUCCESS && password_len == 64){
+					// 			mosquitto__free(u->password);
+					// 			u->password = (char *)password;
+					// 			u->password_len = password_len;
+					// 		}else{
+					// 			log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to decode password for user %s, removing entry.", u->username);
+					// 			unpwd__free_item(unpwd, u);
+					// 		}
+					// 	}else{
+					// 		log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s, removing entry.", u->username);
+					// 		unpwd__free_item(unpwd, u);
 						}
+						mosquitto__free(u->password);
+						u->password = (char *)password;
+						u->password_len = password_len;
 					}else{
-						log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to decode password salt for user %s, removing entry.", u->username);
-						unpwd__free_item(unpwd, u);
+						log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s.", u->username);
+						return MOSQ_ERR_INVAL;
+						// log__printf(NULL, MOSQ_LOG_ERR, "Error: Unable to decode password salt for user %s, removing entry.", u->username);
+						// unpwd__free_item(unpwd, u);
 					}
 				}else{
-					log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s, removing entry.", u->username);
-					unpwd__free_item(unpwd, u);
+					log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s.", u->username);
+					return MOSQ_ERR_INVAL;
+					// log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s, removing entry.", u->username);
+					// unpwd__free_item(unpwd, u);
 				}
 			}else{
-				log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s, removing entry.", u->username);
-				unpwd__free_item(unpwd, u);
+				log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s.", u->username);
+				return MOSQ_ERR_INVAL;
+				// log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid password hash for user %s, removing entry.", u->username);
+				// unpwd__free_item(unpwd, u);
 			}
 		}else{
-			log__printf(NULL, MOSQ_LOG_ERR, "Error: Missing password hash for user %s, removing entry.", u->username);
-			unpwd__free_item(unpwd, u);
+			// log__printf(NULL, MOSQ_LOG_ERR, "Error: Missing password hash for user %s, removing entry.", u->username);
+			// unpwd__free_item(unpwd, u);
 		}
 	}
 

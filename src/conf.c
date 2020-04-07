@@ -1626,14 +1626,14 @@ int config__read_file_core(struct mosquitto__config *config, bool reload, struct
 					}else{
 						log__printf(NULL, MOSQ_LOG_ERR, "Error: Empty max_queued_messages value in configuration.");
 					}
-				}else if(!strcmp(token, "memory_limit")){
-					ssize_t lim;
-					if(conf__parse_ssize_t(&token, "memory_limit", &lim, saveptr)) return MOSQ_ERR_INVAL;
-					if(lim < 0){
-						log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid memory_limit value (%ld).", lim);
-						return MOSQ_ERR_INVAL;
-					}
-					memory__set_limit(lim);
+				// }else if(!strcmp(token, "memory_limit")){
+				// 	ssize_t lim;
+				// 	if(conf__parse_ssize_t(&token, "memory_limit", &lim, saveptr)) return MOSQ_ERR_INVAL;
+				// 	if(lim < 0){
+				// 		log__printf(NULL, MOSQ_LOG_ERR, "Error: Invalid memory_limit value (%ld).", lim);
+				// 		return MOSQ_ERR_INVAL;
+				// 	}
+				// 	memory__set_limit(lim);
 				}else if(!strcmp(token, "message_size_limit")){
 					if(conf__parse_int(&token, "message_size_limit", (int *)&config->message_size_limit, saveptr)) return MOSQ_ERR_INVAL;
 					if(config->message_size_limit > MQTT_MAX_PAYLOAD){
@@ -2371,10 +2371,10 @@ static int conf__parse_string(char **token, const char *name, char **value, char
 		while((*token)[0] == ' ' || (*token)[0] == '\t'){
 			(*token)++;
 		}
-		if(mosquitto_validate_utf8(*token, strlen(*token))){
-			log__printf(NULL, MOSQ_LOG_ERR, "Error: Malformed UTF-8 in configuration.");
-			return MOSQ_ERR_INVAL;
-		}
+		// if(mosquitto_validate_utf8(*token, strlen(*token))){
+		// 	log__printf(NULL, MOSQ_LOG_ERR, "Error: Malformed UTF-8 in configuration.");
+		// 	return MOSQ_ERR_INVAL;
+		// }
 		*value = mosquitto__strdup(*token);
 		if(!*value){
 			log__printf(NULL, MOSQ_LOG_ERR, "Error: Out of memory.");

@@ -34,8 +34,8 @@ unsigned long mosquitto__max_memory_used(void);
 void *mosquitto__realloc(void *ptr, size_t size);
 char *mosquitto__strdup(const char *s);
 
-#ifdef WITH_BROKER
-void memory__set_limit(size_t lim);
-#endif
+// #ifdef WITH_BROKER
+// void memory__set_limit(size_t lim);
+// #endif
 
 #endif
