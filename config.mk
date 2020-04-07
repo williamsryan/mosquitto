@@ -100,7 +100,7 @@ WITH_SHARED_LIBRARIES:=yes
 WITH_BUNDLED_DEPS:=yes
 
 # Build with coverage options
-WITH_COVERAGE:=yes
+WITH_COVERAGE:=no
 
 # Build with stateful debug statements/etc.
 WITH_RPW_DBG=no
@@ -133,8 +133,8 @@ ifeq ($(UNAME),SunOS)
 		CFLAGS?=-Wall -ggdb -O2
 	endif
 else
-  	CC=cc
-	CFLAGS?=-Wall -ggdb #-fdump-tree-all-graph #-O2 #-L /home/ryan/git/klee/build/Debug+Asserts/lib -lkleeRuntest #-c -emit-llvm
+  	CC=clang
+	CFLAGS?=-Wall -ggdb #-flto -O0 #-fdump-tree-all-graph #-O2 #-L /home/ryan/git/klee/build/Debug+Asserts/lib -lkleeRuntest #-c -emit-llvm
 	#LDFLAGS:=$(LDFLAGS) -coverage
 	#LDADD:=$(LDADD) -lcunit
 endif
