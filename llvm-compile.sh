@@ -5,8 +5,8 @@
 #DIR=$PWD
 #CC=wllvm
 
-make binary -j
-(cd src ; make -j) || exit 1
+make binary -j || exit 1
+#(cd src ; make -j) || exit 1
 
 cd client ; make -j
 chmod +x mosquitto_sub
