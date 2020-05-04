@@ -1,5 +1,0 @@
-digraph "CFG for 'net__load_crl_file' function" {
-	label="CFG for 'net__load_crl_file' function";
-
-	Node0x1058a20 [shape=record,label="{%1:\l  call void @llvm.dbg.value(metadata %struct.mosquitto__listener* %0, metadata\l... !637, metadata !DIExpression()), !dbg !638\l  ret i32 0, !dbg !639\l}"];
-}
