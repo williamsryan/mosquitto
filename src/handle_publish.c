@@ -95,10 +95,10 @@ int handle__publish(struct mosquitto_db *db, struct mosquitto *context)
 		return 1;
 	}
 
-	if(mosquitto_validate_utf8(topic, strlen(topic)) != MOSQ_ERR_SUCCESS){
-		mosquitto__free(topic);
- 		return 1;
- 	}
+	// if(mosquitto_validate_utf8(topic, strlen(topic)) != MOSQ_ERR_SUCCESS){
+	// 	mosquitto__free(topic);
+ 	// 	return 1;
+ 	// }
 
 	if(qos > 0){
 		if(packet__read_uint16(&context->in_packet, &mid)){
