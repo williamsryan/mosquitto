@@ -126,7 +126,7 @@ ifeq ($(UNAME),SunOS)
 	endif
 else
 	CC=clang
-	CFLAGS?=-Wall -ggdb -O2 -c -emit-llvm
+	CFLAGS?=-Wall -ggdb -O0 -c -emit-llvm
 endif
 
 STATIC_LIB_DEPS:=
