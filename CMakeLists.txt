@@ -13,6 +13,10 @@ cmake_minimum_required(VERSION 2.8)
 
 set (VERSION 1.6.9)
 
+# For WLLVM support.
+set(CMAKE_C_COMPILER wllvm)
+set(CMAKE_CXX_COMPILER wllvm++)
+
 add_definitions (-DCMAKE -DVERSION=\"${VERSION}\")
 
 if (WIN32)
