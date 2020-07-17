@@ -100,7 +100,7 @@ WITH_SHARED_LIBRARIES:=yes
 WITH_BUNDLED_DEPS:=yes
 
 # Build with coverage options
-WITH_COVERAGE:=yes
+WITH_COVERAGE:=no
 
 # Build with stateful debug statements/etc.
 WITH_RPW_DBG=no
