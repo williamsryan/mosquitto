@@ -15,47 +15,47 @@
 # =============================================================================
 
 # Uncomment to compile the broker with tcpd/libwrap support.
-WITH_WRAP:=yes
+WITH_WRAP:=no
 
 # Comment out to disable SSL/TLS support in the broker and client.
 # Disabling this will also mean that passwords must be stored in plain text. It
 # is strongly recommended that you only disable WITH_TLS if you are not using
 # password authentication at all.
-WITH_TLS:=yes
+WITH_TLS:=no
 
 # Comment out to disable TLS/PSK support in the broker and client. Requires
 # WITH_TLS=yes.
 # This must be disabled if using openssl < 1.0.
-WITH_TLS_PSK:=yes
+WITH_TLS_PSK:=no
 
 # Comment out to disable client threading support.
-WITH_THREADING:=yes
+WITH_THREADING:=no
 
 # Comment out to remove bridge support from the broker. This allow the broker
 # to connect to other brokers and subscribe/publish to topics. You probably
 # want to leave this included unless you want to save a very small amount of
 # memory size and CPU time.
-WITH_BRIDGE:=yes
+WITH_BRIDGE:=no
 
 # Comment out to remove persistent database support from the broker. This
 # allows the broker to store retained messages and durable subscriptions to a
 # file periodically and on shutdown. This is usually desirable (and is
 # suggested by the MQTT spec), but it can be disabled if required.
-WITH_PERSISTENCE:=yes
+WITH_PERSISTENCE:=no
 
 # Comment out to remove memory tracking support from the broker. If disabled,
 # mosquitto won't track heap memory usage nor export '$SYS/broker/heap/current
 # size', but will use slightly less memory and CPU time.
-WITH_MEMORY_TRACKING:=yes
+WITH_MEMORY_TRACKING:=no
 
 # Compile with database upgrading support? If disabled, mosquitto won't
 # automatically upgrade old database versions.
 # Not currently supported.
-WITH_DB_UPGRADE:=yes
+WITH_DB_UPGRADE:=no
 
 # Comment out to remove publishing of the $SYS topic hierarchy containing
 # information about the broker state.
-WITH_SYS_TREE:=yes
+WITH_SYS_TREE:=no
 
 # Build with systemd support. If enabled, mosquitto will notify systemd after
 # initialization. See README in service/systemd/ for more information.
@@ -125,7 +125,7 @@ ifeq ($(UNAME),SunOS)
 		CFLAGS?=-Wall -ggdb -O2
 	endif
 else
-	CC=clang
+	CC=polybuild
 	CFLAGS?=-Wall -ggdb -c -O0 -emit-llvm -fno-inline
 endif
 
