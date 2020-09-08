@@ -1,0 +1,523 @@
+{
+    "tainted_functions": {
+        "dfs$connack_callback": {
+            "input_bytes": {
+                "0x557ddf589ea0": [
+                    0,
+                    1
+                ]
+            },
+            "cmp_bytes": {
+                "0x557ddf589ea0": [
+                    0,
+                    1
+                ]
+            }
+        },
+        "dfs$handle__connack": {
+            "input_bytes": {
+                "0x557ddf589ea0": [
+                    1
+                ]
+            },
+            "cmp_bytes": {
+                "0x557ddf589ea0": []
+            }
+        },
+        "dfs$handle__packet": {
+            "input_bytes": {
+                "0x7ffd4f885957": [
+                    0
+                ]
+            },
+            "cmp_bytes": {
+                "0x7ffd4f885957": []
+            }
+        },
+        "dfs$my_connect_callback": {
+            "input_bytes": {
+                "0x557ddf589ea0": [
+                    1
+                ]
+            },
+            "cmp_bytes": {
+                "0x557ddf589ea0": [
+                    1
+                ]
+            }
+        },
+        "dfs$packet__read": {
+            "input_bytes": {
+                "0x7ffd4f885957": [
+                    0
+                ]
+            },
+            "cmp_bytes": {
+                "0x7ffd4f885957": [
+                    0
+                ]
+            }
+        },
+        "dfs$packet__read_byte": {
+            "input_bytes": {
+                "0x7ffd4f885957": [
+                    0
+                ]
+            },
+            "cmp_bytes": {
+                "0x7ffd4f885957": [
+                    0
+                ]
+            }
+        }
+    },
+    "runtime_cfg": {
+        "dfs$cfg_add_topic": [
+            "dfs$client_config_line_proc"
+        ],
+        "dfs$client_config_cleanup": [
+            "main"
+        ],
+        "dfs$client_config_line_proc": [
+            "dfs$client_config_load"
+        ],
+        "dfs$client_config_load": [
+            "main"
+        ],
+        "dfs$client_connect": [
+            "main"
+        ],
+        "dfs$client_id_generate": [
+            "main"
+        ],
+        "dfs$client_opts_set": [
+            "main"
+        ],
+        "dfs$connack_callback": [
+            "dfs$handle__connack"
+        ],
+        "dfs$do_client_disconnect": [
+            "dfs$packet__write"
+        ],
+        "dfs$handle__connack": [
+            "dfs$handle__packet"
+        ],
+        "dfs$handle__packet": [
+            "dfs$packet__read"
+        ],
+        "dfs$init_config": [
+            "dfs$client_config_load"
+        ],
+        "dfs$log__printf": [
+            "dfs$send__disconnect",
+            "dfs$send__publish",
+            "dfs$send__connect",
+            "dfs$connack_callback"
+        ],
+        "dfs$message__cleanup_all": [
+            "dfs$mosquitto__destroy"
+        ],
+        "dfs$message__reconnect_reset": [
+            "dfs$mosquitto__reconnect"
+        ],
+        "dfs$message__retry_check": [
+            "dfs$handle__connack"
+        ],
+        "dfs$mosquitto__calloc": [
+            "dfs$send__disconnect",
+            "dfs$send__real_publish",
+            "dfs$send__connect",
+            "dfs$mosquitto_new",
+            "dfs$mosquitto__connect_init"
+        ],
+        "dfs$mosquitto__connect_init": [
+            "dfs$mosquitto_connect_bind_v5"
+        ],
+        "dfs$mosquitto__destroy": [
+            "dfs$mosquitto_destroy",
+            "dfs$mosquitto_reinitialise"
+        ],
+        "dfs$mosquitto__free": [
+            "dfs$packet__write",
+            "dfs$mosquitto_destroy",
+            "dfs$mosquitto__connect_init",
+            "dfs$mosquitto__destroy",
+            "dfs$packet__cleanup"
+        ],
+        "dfs$mosquitto__get_state": [
+            "dfs$packet__read",
+            "dfs$packet__write"
+        ],
+        "dfs$mosquitto__malloc": [
+            "dfs$packet__read",
+            "dfs$packet__alloc"
+        ],
+        "dfs$mosquitto__mid_generate": [
+            "dfs$mosquitto_publish_v5"
+        ],
+        "dfs$mosquitto__reconnect": [
+            "dfs$mosquitto_connect_bind_v5"
+        ],
+        "dfs$mosquitto__set_state": [
+            "dfs$do_client_disconnect",
+            "dfs$mosquitto_disconnect_v5",
+            "dfs$mosquitto_connect_bind_v5",
+            "dfs$mosquitto__reconnect"
+        ],
+        "dfs$mosquitto__strdup": [
+            "dfs$mosquitto__connect_init"
+        ],
+        "dfs$mosquitto_connect_bind_v5": [
+            "dfs$client_connect"
+        ],
+        "dfs$mosquitto_connect_v5_callback_set": [
+            "main"
+        ],
+        "dfs$mosquitto_destroy": [
+            "main"
+        ],
+        "dfs$mosquitto_disconnect_v5": [
+            "dfs$my_publish_callback"
+        ],
+        "dfs$mosquitto_disconnect_v5_callback_set": [
+            "main"
+        ],
+        "dfs$mosquitto_int_option": [
+            "dfs$mosquitto_max_inflight_messages_set",
+            "dfs$client_opts_set"
+        ],
+        "dfs$mosquitto_lib_cleanup": [
+            "main"
+        ],
+        "dfs$mosquitto_lib_init": [
+            "main"
+        ],
+        "dfs$mosquitto_loop": [
+            "dfs$pub_shared_loop"
+        ],
+        "dfs$mosquitto_loop_read": [
+            "dfs$mosquitto_loop"
+        ],
+        "dfs$mosquitto_loop_write": [
+            "dfs$mosquitto_loop"
+        ],
+        "dfs$mosquitto_max_inflight_messages_set": [
+            "dfs$client_opts_set"
+        ],
+        "dfs$mosquitto_new": [
+            "main"
+        ],
+        "dfs$mosquitto_property_check_all": [
+            "dfs$client_config_load"
+        ],
+        "dfs$mosquitto_property_free_all": [
+            "dfs$client_config_cleanup",
+            "dfs$send__connect",
+            "dfs$handle__connack"
+        ],
+        "dfs$mosquitto_property_read_byte": [
+            "dfs$handle__connack"
+        ],
+        "dfs$mosquitto_property_read_int16": [
+            "dfs$handle__connack"
+        ],
+        "dfs$mosquitto_property_read_int32": [
+            "dfs$handle__connack"
+        ],
+        "dfs$mosquitto_property_read_string": [
+            "dfs$handle__connack"
+        ],
+        "dfs$mosquitto_pub_topic_check": [
+            "dfs$mosquitto_publish_v5",
+            "dfs$cfg_add_topic"
+        ],
+        "dfs$mosquitto_publish_v5": [
+            "dfs$my_publish"
+        ],
+        "dfs$mosquitto_publish_v5_callback_set": [
+            "main"
+        ],
+        "dfs$mosquitto_reinitialise": [
+            "dfs$mosquitto_new"
+        ],
+        "dfs$mosquitto_time": [
+            "dfs$do_client_disconnect",
+            "dfs$mosquitto__reconnect",
+            "dfs$mosquitto_reinitialise",
+            "dfs$packet__write",
+            "dfs$mosquitto_loop",
+            "dfs$packet__read",
+            "dfs$message__retry_check"
+        ],
+        "dfs$mosquitto_validate_utf8": [
+            "dfs$mosquitto_publish_v5",
+            "dfs$cfg_add_topic"
+        ],
+        "dfs$my_connect_callback": [
+            "dfs$connack_callback"
+        ],
+        "dfs$my_disconnect_callback": [
+            "dfs$do_client_disconnect"
+        ],
+        "dfs$my_publish": [
+            "dfs$my_connect_callback"
+        ],
+        "dfs$my_publish_callback": [
+            "dfs$packet__write"
+        ],
+        "dfs$net__cleanup": [
+            "dfs$mosquitto_lib_cleanup"
+        ],
+        "dfs$net__init": [
+            "dfs$mosquitto_lib_init"
+        ],
+        "dfs$net__read": [
+            "dfs$packet__read"
+        ],
+        "dfs$net__socket_close": [
+            "dfs$do_client_disconnect"
+        ],
+        "dfs$net__socket_connect": [
+            "dfs$mosquitto__reconnect"
+        ],
+        "dfs$net__socket_connect_step3": [
+            "dfs$net__socket_connect"
+        ],
+        "dfs$net__socket_nonblock": [
+            "dfs$net__try_connect",
+            "dfs$net__socketpair"
+        ],
+        "dfs$net__socketpair": [
+            "dfs$mosquitto__connect_init"
+        ],
+        "dfs$net__try_connect": [
+            "dfs$net__socket_connect"
+        ],
+        "dfs$net__write": [
+            "dfs$packet__write"
+        ],
+        "dfs$packet__alloc": [
+            "dfs$send__disconnect",
+            "dfs$send__connect",
+            "dfs$send__real_publish"
+        ],
+        "dfs$packet__check_oversize": [
+            "dfs$send__real_publish"
+        ],
+        "dfs$packet__cleanup": [
+            "dfs$packet__read",
+            "dfs$packet__write",
+            "dfs$packet__cleanup_all",
+            "dfs$mosquitto__reconnect",
+            "dfs$mosquitto__destroy",
+            "dfs$mosquitto_reinitialise"
+        ],
+        "dfs$packet__cleanup_all": [
+            "dfs$mosquitto__reconnect"
+        ],
+        "dfs$packet__queue": [
+            "dfs$send__disconnect",
+            "dfs$send__connect",
+            "dfs$send__real_publish"
+        ],
+        "dfs$packet__read": [
+            "dfs$mosquitto_loop_read"
+        ],
+        "dfs$packet__read_byte": [
+            "dfs$handle__connack"
+        ],
+        "dfs$packet__write": [
+            "dfs$mosquitto_loop_write",
+            "dfs$packet__queue"
+        ],
+        "dfs$packet__write_byte": [
+            "dfs$send__connect",
+            "dfs$packet__write_uint16"
+        ],
+        "dfs$packet__write_bytes": [
+            "dfs$send__real_publish",
+            "dfs$packet__write_string"
+        ],
+        "dfs$packet__write_string": [
+            "dfs$send__real_publish",
+            "dfs$send__connect"
+        ],
+        "dfs$packet__write_uint16": [
+            "dfs$send__connect",
+            "dfs$packet__write_string"
+        ],
+        "dfs$pub_shared_cleanup": [
+            "main"
+        ],
+        "dfs$pub_shared_init": [
+            "main"
+        ],
+        "dfs$pub_shared_loop": [
+            "main"
+        ],
+        "dfs$send__connect": [
+            "dfs$mosquitto__reconnect"
+        ],
+        "dfs$send__disconnect": [
+            "dfs$mosquitto_disconnect_v5"
+        ],
+        "dfs$send__publish": [
+            "dfs$mosquitto_publish_v5"
+        ],
+        "dfs$send__real_publish": [
+            "dfs$send__publish"
+        ],
+        "dfs$util__random_bytes": [
+            "dfs$mosquitto__connect_init"
+        ],
+        "dfs$will__clear": [
+            "dfs$mosquitto__destroy"
+        ],
+        "main": [
+            ""
+        ]
+    },
+    "version": "2.1.0",
+    "taint_sources": {
+        "0x557ddf5865d0": {
+            "end_byte": 37,
+            "start_byte": 0
+        },
+        "0x557ddf589ea0": {
+            "end_byte": 2,
+            "start_byte": 0
+        },
+        "0x557ddf58bbd0": {
+            "end_byte": 33,
+            "start_byte": 0
+        },
+        "0x557ddf58d5f0": {
+            "end_byte": 2,
+            "start_byte": 0
+        },
+        "0x7ffd4f882d27": {
+            "end_byte": 1,
+            "start_byte": 0
+        },
+        "0x7ffd4f8846d7": {
+            "end_byte": 1,
+            "start_byte": 0
+        },
+        "0x7ffd4f885707": {
+            "end_byte": 1,
+            "start_byte": 0
+        },
+        "0x7ffd4f885957": {
+            "end_byte": 1,
+            "start_byte": 0
+        },
+        "0x7ffd4f886a2f": {
+            "end_byte": 1,
+            "start_byte": 0
+        },
+        "stdin": {
+            "end_byte": 2147483646,
+            "start_byte": 0
+        }
+    },
+    "tainted_input_blocks": {
+        "0x557ddf5865d0": [
+            [
+                0,
+                36
+            ],
+            [
+                37,
+                37
+            ]
+        ],
+        "0x557ddf589ea0": [
+            [
+                0,
+                1
+            ],
+            [
+                2,
+                2
+            ]
+        ],
+        "0x557ddf58bbd0": [
+            [
+                0,
+                32
+            ],
+            [
+                33,
+                33
+            ]
+        ],
+        "0x557ddf58d5f0": [
+            [
+                0,
+                1
+            ],
+            [
+                2,
+                2
+            ]
+        ],
+        "0x7ffd4f882d27": [
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ]
+        ],
+        "0x7ffd4f8846d7": [
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ]
+        ],
+        "0x7ffd4f885707": [
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ]
+        ],
+        "0x7ffd4f885957": [
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ]
+        ],
+        "0x7ffd4f886a2f": [
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ]
+        ]
+    }
+}

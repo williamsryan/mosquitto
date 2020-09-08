@@ -14,7 +14,7 @@ Contributors:
    Roger Light - initial implementation and documentation.
 */
 
-#include "config.h"
+#include "../config.h" // Modifed for Aloja
 
 #include <errno.h>
 #include <fcntl.h>
@@ -30,8 +30,8 @@ Contributors:
 #define snprintf sprintf_s
 #endif
 
-#include <mqtt_protocol.h>
-#include <mosquitto.h>
+#include "../lib/mqtt_protocol.h" // Modifed for Aloja
+#include "../lib/mosquitto.h"
 #include "client_shared.h"
 #include "pub_shared.h"
 
@@ -95,6 +95,15 @@ static int check_repeat_time(void)
 	return 0;
 }
 #endif
+
+// Modified for Aloja, in order to get mosq struct address
+void get_mosq_address(struct mosquitto *mosq){
+	printf("Get mosq address!");
+}
+// struct mosquitto *get_mosq_address(struct mosquitto *mosq){
+// 	printf("Get mosq address!");
+// 	return mosq;
+// }
 
 void my_disconnect_callback(struct mosquitto *mosq, void *obj, int rc, const mosquitto_property *properties)
 {
@@ -210,7 +219,7 @@ void my_publish_callback(struct mosquitto *mosq, void *obj, int mid, int reason_
 
 int pub_shared_init(void)
 {
-	line_buf = malloc(line_buf_len);
+	line_buf = (char *)(malloc(line_buf_len)); // Modifed for Aloja
 	if(!line_buf){
 		err_printf(&cfg, "Error: Out of memory.\n");
 		return 1;
@@ -260,7 +269,7 @@ int pub_shared_loop(struct mosquitto *mosq)
 						line_buf_len += 1024;
 						pos += 1023;
 						read_len = 1024;
-						buf2 = realloc(line_buf, line_buf_len);
+						buf2 = (char *)(realloc(line_buf, line_buf_len)); // Modifed for Aloja
 						if(!buf2){
 							err_printf(&cfg, "Error: Out of memory.\n");
 							return MOSQ_ERR_NOMEM;
@@ -344,7 +353,7 @@ void print_usage(void)
 
 	mosquitto_lib_version(&major, &minor, &revision);
 	printf("mosquitto_pub is a simple mqtt client that will publish a message on a single topic and exit.\n");
-	printf("mosquitto_pub version %s running on libmosquitto %d.%d.%d.\n\n", VERSION, major, minor, revision);
+	printf("mosquitto_pub version %f running on libmosquitto %d.%d.%d.\n\n", 6.6, major, minor, revision);// Modified for Aloja
 	printf("Usage: mosquitto_pub {[-h host] [-p port] [-u username] [-P password] -t topic | -L URL}\n");
 	printf("                     {-f file | -l | -n | -m message}\n");
 	printf("                     [-c] [-k keepalive] [-q qos] [-r] [--repeat N] [--repeat-delay time]\n");
@@ -492,6 +501,7 @@ int main(int argc, char *argv[])
 	}
 
 	mosq = mosquitto_new(cfg.id, cfg.clean_session, NULL);
+	get_mosq_address(mosq);
 	if(!mosq){
 		switch(errno){
 			case ENOMEM:
