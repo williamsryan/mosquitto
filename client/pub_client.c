@@ -98,11 +98,11 @@ static int check_repeat_time(void)
 
 // Modified for Aloja, in order to get mosq struct address
 void get_mosq_address(struct mosquitto *mosq){
-	printf("Get mosq address!");
+	printf("Get mosq address!\n");
 }
 
-void get_cfg_address(struct mosq_config cfg) {
-	printf("Get cfg address!");
+void get_cfg_address(struct mosq_config *config) {
+	printf("Get cfg address!\n");
 }
 
 void my_disconnect_callback(struct mosquitto *mosq, void *obj, int rc, const mosquitto_property *properties)
@@ -460,6 +460,10 @@ int main(int argc, char *argv[])
 	if(pub_shared_init()) return 1;
 
 	rc = client_config_load(&cfg, CLIENT_PUB, argc, argv);
+
+	// Get one for `mosq_config`too?
+	get_cfg_address(&cfg);
+
 	if(rc){
 		if(rc == 2){
 			/* --help */
@@ -504,9 +508,6 @@ int main(int argc, char *argv[])
 
 	// Manual instrumentation for aloja,
 	get_mosq_address(mosq);
-
-	// Get one for `mosq_config`too?
-	get_cfg_address(&cfg);
 
 	if(!mosq){
 		switch(errno){
