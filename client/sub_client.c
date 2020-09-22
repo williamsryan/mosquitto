@@ -278,6 +278,11 @@ void print_usage(void)
 	printf("\nSee https://mosquitto.org/ for more information.\n\n");
 }
 
+// Modified for Aloja, in order to get mosq struct address
+void get_mosq_address(struct mosquitto *mosq){
+	printf("Get mosq address!\n");
+}
+
 int main(int argc, char *argv[])
 {
 	int rc;
@@ -308,6 +313,10 @@ int main(int argc, char *argv[])
 	}
 
 	mosq = mosquitto_new(cfg.id, cfg.clean_session, &cfg);
+
+	// Manual instrumentation for aloja,
+	get_mosq_address(mosq);
+
 	if(!mosq){
 		switch(errno){
 			case ENOMEM:

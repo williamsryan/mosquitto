@@ -728,6 +728,10 @@ void do_disconnect(struct mosquitto_db *db, struct mosquitto *context, int reaso
 	}
 }
 
+// Modified for Aloja, in order to get mosq struct address
+void get_mosq_address(struct mosquitto *mosq){
+	printf("Get mosq address!\n");
+}
 
 #ifdef WITH_EPOLL
 static void loop_handle_reads_writes(struct mosquitto_db *db, mosq_sock_t sock, uint32_t events)
@@ -857,6 +861,11 @@ static void loop_handle_reads_writes(struct mosquitto_db *db, struct pollfd *pol
 #endif
 			do{
 				rc = packet__read(db, context);
+
+				// Testing - RPW.
+				get_mosq_address(context);
+				// End test - RPW.
+				
 				if(rc){
 					do_disconnect(db, context, rc);
 					continue;
