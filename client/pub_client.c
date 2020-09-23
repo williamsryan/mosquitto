@@ -117,13 +117,21 @@ void my_disconnect_callback(struct mosquitto *mosq, void *obj, int rc, const mos
 	}
 }
 
+void get_payload(void *payload) {
+	printf("Get packet payload!\n");
+}
+
 int my_publish(struct mosquitto *mosq, int *mid, const char *topic, int payloadlen, void *payload, int qos, bool retain)
 {
 	ready_for_repeat = false;
 	if(cfg.protocol_version == MQTT_PROTOCOL_V5 && cfg.have_topic_alias && first_publish == false){
+		// Aloja test - RPW.
+		get_payload(payload);
 		return mosquitto_publish_v5(mosq, mid, NULL, payloadlen, payload, qos, retain, cfg.publish_props);
 	}else{
 		first_publish = false;
+		// Aloja test - RPW.
+		get_payload(payload);
 		return mosquitto_publish_v5(mosq, mid, topic, payloadlen, payload, qos, retain, cfg.publish_props);
 	}
 }
@@ -462,7 +470,7 @@ int main(int argc, char *argv[])
 	rc = client_config_load(&cfg, CLIENT_PUB, argc, argv);
 
 	// Get one for `mosq_config`too?
-	get_cfg_address(&cfg);
+	//get_cfg_address(&cfg);
 
 	if(rc){
 		if(rc == 2){
@@ -507,7 +515,7 @@ int main(int argc, char *argv[])
 	mosq = mosquitto_new(cfg.id, cfg.clean_session, NULL);
 
 	// Manual instrumentation for aloja,
-	get_mosq_address(mosq);
+	//get_mosq_address(mosq);
 
 	if(!mosq){
 		switch(errno){

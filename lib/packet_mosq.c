@@ -444,6 +444,7 @@ int packet__read(struct mosquitto *mosq)
 		}
 	}
 	while(mosq->in_packet.to_process>0){
+		// This is where the payload is being read.
 		read_length = net__read(mosq, &(mosq->in_packet.payload[mosq->in_packet.pos]), mosq->in_packet.to_process);
 		if(read_length > 0){
 			G_BYTES_RECEIVED_INC(read_length);
