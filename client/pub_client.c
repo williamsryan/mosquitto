@@ -515,7 +515,7 @@ int main(int argc, char *argv[])
 	mosq = mosquitto_new(cfg.id, cfg.clean_session, NULL);
 
 	// Manual instrumentation for aloja,
-	//get_mosq_address(mosq);
+	get_mosq_address(mosq);
 
 	if(!mosq){
 		switch(errno){
