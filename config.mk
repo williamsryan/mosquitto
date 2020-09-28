@@ -126,7 +126,7 @@ ifeq ($(UNAME),SunOS)
 	endif
 else
 	CC=clang
-	CFLAGS?=-Wall -ggdb -c -O0 -emit-llvm -fno-inline
+	CFLAGS?=-Wall -ggdb -c -O0 -emit-llvm -fno-inline -MJ json-compilation-database
 endif
 
 STATIC_LIB_DEPS:=

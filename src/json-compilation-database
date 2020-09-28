@@ -1,0 +1,4 @@
+{ "directory": "/home/ryan/git/TARGETS/mosquitto/src", "file": "subs.c", "output": "subs.bc", "arguments": ["/usr/lib/llvm-10/bin/clang", "-xc", "subs.c", "-I", ".", "-I", "..", "-I", "../lib", "-I", "../src/deps", "-D", "WITH_WRAP", "-D", "WITH_TLS", "-D", "WITH_TLS_PSK", "-D", "WITH_BRIDGE", "-D", "WITH_PERSISTENCE", "-D", "WITH_MEMORY_TRACKING", "-D", "WITH_SYS_TREE", "-Wall", "-ggdb", "-c", "-O0", "-emit-llvm", "-fno-inline", "-D", "VERSION=\"1.6.7\"", "-D", "WITH_BROKER", "-c", "-o", "subs.bc", "--target=x86_64-pc-linux-gnu"]},
+.bc", "--target=x86_64-pc-linux-gnu"]},
+6_64-pc-linux-gnu"]},
+]},

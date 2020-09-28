@@ -1,0 +1,2 @@
+{ "directory": "/home/ryan/git/TARGETS/mosquitto/client", "file": "rr_client.c", "output": "rr_client.bc", "arguments": ["/usr/lib/llvm-10/bin/clang", "-xc", "rr_client.c", "-I", "..", "-I", "../lib", "-D", "WITH_TLS", "-D", "WITH_TLS_PSK", "-D", "WITH_THREADING", "-Wall", "-ggdb", "-c", "-O0", "-emit-llvm", "-fno-inline", "-D", "VERSION=\"1.6.7\"", "-c", "-o", "rr_client.bc", "--target=x86_64-pc-linux-gnu"]},
+-target=x86_64-pc-linux-gnu"]},

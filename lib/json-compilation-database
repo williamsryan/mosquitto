@@ -1,0 +1,4 @@
+{ "directory": "/home/ryan/git/TARGETS/mosquitto/lib", "file": "tls_mosq.c", "output": "tls_mosq.bc", "arguments": ["/usr/lib/llvm-10/bin/clang", "-xc", "tls_mosq.c", "-I", ".", "-I", "..", "-I", "../lib", "-I", "../src/deps", "-D", "WITH_TLS", "-D", "WITH_TLS_PSK", "-D", "WITH_THREADING", "-Wall", "-ggdb", "-c", "-O0", "-emit-llvm", "-fno-inline", "-fPIC", "-c", "-o", "tls_mosq.bc", "--target=x86_64-pc-linux-gnu"]},
+gnu"]},
+x86_64-pc-linux-gnu"]},
+]},
