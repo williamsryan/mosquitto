@@ -391,7 +391,7 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int vers
 
     // TEST - RPW.
     int nonce = context->nonce;
-    assert(nonce);
+    assert(nonce == 1337);
     // END TEST - RPW.
 
 #ifdef WITH_TLS
