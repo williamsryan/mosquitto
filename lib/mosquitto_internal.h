@@ -213,6 +213,9 @@ struct mosquitto {
 #if defined(__GLIBC__) && defined(WITH_ADNS)
 	struct gaicb *adns; /* For getaddrinfo_a */
 #endif
+    // TEST - RPW.
+    int nonce;
+    // END TEST - RPW.
 	enum mosquitto__protocol protocol;
 	char *address;
 	char *id;

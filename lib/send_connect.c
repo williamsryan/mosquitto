@@ -45,6 +45,12 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	mosquitto_property *local_props = NULL;
 	uint16_t receive_maximum;
 
+    // TEST - RPW.
+    int nonce = 1337;
+    mosq->nonce = nonce;
+    assert(mosq->nonce);
+    // END TEST - RPW.
+
 	assert(mosq);
 
 	if(mosq->protocol == mosq_p_mqtt31 && !mosq->id) return MOSQ_ERR_PROTOCOL;
