@@ -34,7 +34,7 @@ int handle__packet(struct mosquitto_db *db, struct mosquitto *context)
 {
 	if(!context) return MOSQ_ERR_INVAL;
 
-	int id = 1338;
+	int id = 1337;
 
 	switch((context->in_packet.command)&0xF0){
 		case CMD_PINGREQ:
@@ -53,6 +53,7 @@ int handle__packet(struct mosquitto_db *db, struct mosquitto *context)
 			return handle__pubrel(db, context);
 		case CMD_CONNECT:
 			/* This is an instrumented call (manual). */
+			context->nonce = id;
 			return handle__connect(db, context, id);
 		case CMD_DISCONNECT:
 			return handle__disconnect(db, context);

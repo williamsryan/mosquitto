@@ -47,8 +47,8 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 
     // TEST - RPW.
     int nonce = 1337;
-    mosq->nonce = nonce;
-    assert(mosq->nonce);
+    mosq->nonce = 1337;
+    //assert(mosq->nonce);
     // END TEST - RPW.
 
 	assert(mosq);
@@ -201,10 +201,10 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	mosq->keepalive = keepalive;
 #ifdef WITH_BROKER
 # ifdef WITH_BRIDGE
-	log__printf(mosq, MOSQ_LOG_DEBUG, "Bridge %s sending CONNECT", clientid);
+	log__printf(mosq, MOSQ_LOG_NOTICE, "Bridge %s sending CONNECT", clientid);
 # endif
 #else
-	log__printf(mosq, MOSQ_LOG_DEBUG, "Client %s sending CONNECT", clientid);
+	log__printf(mosq, MOSQ_LOG_NOTICE, "Client %s sending CONNECT", clientid);
 #endif
 	return packet__queue(mosq, packet);
 }

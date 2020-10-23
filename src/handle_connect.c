@@ -391,6 +391,11 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int vers
 
     // TEST - RPW.
     int nonce = context->nonce;
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Nonce value: %d", nonce);
+	/*if (nonce != 1337) {
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Client::Broker mismatch. Disconnecting.");
+		goto handle_connect_error;
+	}*/
     assert(nonce == 1337);
     // END TEST - RPW.
 
