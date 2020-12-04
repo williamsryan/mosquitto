@@ -347,6 +347,7 @@ struct mosquitto {
 	uint32_t events;
 #endif
 	//int nonce;
+	//double[] nonce;
 };
 
 #define STREMPTY(str) (str[0] == '\0')
