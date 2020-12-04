@@ -359,15 +359,16 @@ error_cleanup:
 
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
+	// New test for inserting logic for dynamic mutation.
+	double nonce[] = {1337, 28, 92, 65};
+	// End test.
+	
 	// remaining_length is always 35? Make reversible function out of this.
 	/*log__printf(NULL, MOSQ_LOG_NOTICE, "TEST NONCE: %d", context->in_packet.remaining_length-70);
 	if (context->in_packet.remaining_length-70 != 1337) {
 		return -1;
 	}
 	context->in_packet.remaining_length = (context->in_packet.remaining_length - 1337) / 2;*/
-
-	// New test for inserting logic for dynamic mutation.
-	// End test.
 
 	char protocol_name[7];
 	uint8_t protocol_version;
