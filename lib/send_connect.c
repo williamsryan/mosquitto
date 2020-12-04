@@ -33,6 +33,12 @@ Contributors:
 
 int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session, const mosquitto_property *properties)
 {
+
+	// New test for inserting logic for dynamic mutation.
+	double nonce[] = {1337, 28, 92, 65};
+	//mosq->nonce = [];
+	// End test.
+
 	struct mosquitto__packet *packet = NULL;
 	int payloadlen;
 	uint8_t will = 0;
@@ -130,7 +136,10 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 
 	packet->command = CMD_CONNECT;
 	packet->remaining_length = headerlen + payloadlen;
-	//packet->remaining_length = 2*(headerlen + payloadlen) + 1337;
+	// Nonce below should be chosen dynamically.
+	// if (something):
+	//		nonce[something]
+	//packet->remaining_length = 2*(headerlen + payloadlen) + nonce[0];
 
 	rc = packet__alloc(packet);
 	if(rc){

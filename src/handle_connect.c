@@ -365,6 +365,10 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 		return -1;
 	}
 	context->in_packet.remaining_length = (context->in_packet.remaining_length - 1337) / 2;*/
+
+	// New test for inserting logic for dynamic mutation.
+	// End test.
+
 	char protocol_name[7];
 	uint8_t protocol_version;
 	uint8_t connect_flags;
