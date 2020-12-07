@@ -372,9 +372,9 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-70);
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %u", context->keepalive);
-	if (context->in_packet.remaining_length-70 != nonce[i%4]) {
-		return -1;
-	}
+	//if (context->in_packet.remaining_length-70 != nonce[i%4]) {
+	//	return -1;
+	//}
 	context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[i%4]) / 2;
 
 	char protocol_name[7];
