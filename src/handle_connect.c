@@ -371,6 +371,7 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	// remaining_length is always 35? Make reversible function out of this.
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-70);
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %u", context->keepalive);
 	if (context->in_packet.remaining_length-70 != nonce[i%4]) {
 		return -1;
 	}
