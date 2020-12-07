@@ -356,19 +356,25 @@ error_cleanup:
 }
 
 
-
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
 	// New test for inserting logic for dynamic mutation.
-	double nonce[] = {1337, 28, 92, 65};
+	int nonce[] = {1337, 28, 92, 65};
+	int i = 0;
 	// End test.
+
+	// TEST - RPW.
+	// Add something here to change the nonce index at a given 
+	// increment or something.
+	// END TEST - RPW.
 	
 	// remaining_length is always 35? Make reversible function out of this.
-	log__printf(NULL, MOSQ_LOG_NOTICE, "TEST NONCE: %d", context->in_packet.remaining_length-70);
-	if (context->in_packet.remaining_length-70 != nonce[0]) {
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-70);
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
+	if (context->in_packet.remaining_length-70 != nonce[i%4]) {
 		return -1;
 	}
-	context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[0]) / 2;
+	context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[i%4]) / 2;
 
 	char protocol_name[7];
 	uint8_t protocol_version;
