@@ -139,14 +139,9 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	// Nonce below should be chosen dynamically.
 	// if (something):
 	//		nonce[something]
+	log__printf(mosq, MOSQ_LOG_NOTICE, "Header length: %d", headerlen);
+	log__printf(mosq, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen);
 	packet->remaining_length = 2*(headerlen + payloadlen) + nonce[0];
-	// TEST - RPW.
-	/*if (packet->command == CMD_CONNECT) {
-		packet->remaining_length = 2*(headerlen + payloadlen) + nonce[0];
-	} else {
-		packet->remaining_length = 2*(headerlen + payloadlen) + nonce[3];
-	}*/
-	// END TEST - RPW.
 
 	rc = packet__alloc(packet);
 	if(rc){

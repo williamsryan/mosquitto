@@ -346,7 +346,7 @@ struct mosquitto {
 #ifdef WITH_EPOLL
 	uint32_t events;
 #endif
-	//int nonce;
+	int nonce;
 	//double[] nonce;
 };
 
