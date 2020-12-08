@@ -367,6 +367,7 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	// 35 = header + pay
 	// pay = 35 - headerlen.
 	int payloadlen_test = ((context->in_packet.remaining_length-nonce[0])/2) - 10;
+	//int payloadlen_test = context->in_packet.remaining_length - 10; // Header here is always 10.
 	// End test.
 
 	// TEST - RPW.
@@ -375,7 +376,7 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	// END TEST - RPW.
 	
 	// remaining_length is always 35? Make reversible function out of this.
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-70);
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-(70));
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
 	//log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %d", context->in_packet.remaining_length);
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen_test);
