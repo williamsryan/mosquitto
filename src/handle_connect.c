@@ -377,13 +377,20 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	
 	// remaining_length is always 35? Make reversible function out of this.
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-(70));
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
-	//log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %d", context->in_packet.remaining_length);
+
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen_test);
+	if (payloadlen_test == 25) {
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[0]);
+		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[0]) / 2;
+	} else {
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[2]);
+		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[2]) / 2;
+	}
+	//log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
+	//log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %d", context->in_packet.remaining_length);
 	//if (context->in_packet.remaining_length-70 != nonce[i%4]) {
 	//	return -1;
 	//}
-	context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[i%4]) / 2;
 
 	char protocol_name[7];
 	uint8_t protocol_version;
