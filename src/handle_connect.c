@@ -360,13 +360,14 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
 	// New test for inserting logic for dynamic mutation.
 	int nonce[] = {1337, 28, 92, 65};
-	int i = 0;
+	//int i = 0;
 	// remaining_length = 2 * (headerlen + payloadlen) + nonce[0]
 	// 1407 = 2(header + pay) + nonce[0]
 	// 70 = 2(header + pay)
 	// 35 = header + pay
 	// pay = 35 - headerlen.
-	int payloadlen_test = ((context->in_packet.remaining_length-nonce[0])/2) - 10;
+	//int payloadlen_test = ((context->in_packet.remaining_length-nonce[0])/2) - 10;
+	//int payloadlen_test = context->in_packet.remaining_length;
 	//int payloadlen_test = context->in_packet.remaining_length - 10; // Header here is always 10.
 	// End test.
 
@@ -375,16 +376,21 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	// increment or something.
 	// END TEST - RPW.
 	
-	// remaining_length is always 35? Make reversible function out of this.
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length-(70));
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length);
 
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen_test);
-	if (payloadlen_test == 25) {
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (+nonce): %d", context->in_packet.remaining_length-10);
+	if (context->in_packet.remaining_length > 1000) {
 		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[0]);
-		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[0]) / 2;
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-nonce[0]);
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-nonce[0]));
+
+		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[0]);
 	} else {
 		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[2]);
-		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[2]) / 2;
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-nonce[2]);
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-nonce[2]));
+
+		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[2]);
 	}
 	//log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
 	//log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %d", context->in_packet.remaining_length);

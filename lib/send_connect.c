@@ -135,13 +135,19 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	}
 
 	packet->command = CMD_CONNECT;
-	//packet->remaining_length = headerlen + payloadlen;
+	packet->remaining_length = headerlen + payloadlen;
 	// Nonce below should be chosen dynamically.
 	// if (something):
 	//		nonce[something]
 	log__printf(mosq, MOSQ_LOG_NOTICE, "Header length: %d", headerlen);
 	log__printf(mosq, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen);
-	packet->remaining_length = 2*(headerlen + payloadlen) + nonce[0];
+	if (payloadlen > 10) {
+		log__printf(mosq, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
+		packet->remaining_length = packet->remaining_length + nonce[0];
+	} else {
+		log__printf(mosq, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
+		packet->remaining_length = packet->remaining_length + nonce[2];
+	}
 
 	rc = packet__alloc(packet);
 	if(rc){
