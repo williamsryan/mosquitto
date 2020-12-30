@@ -204,7 +204,6 @@ struct mosquitto_msg_data{
 	uint16_t inflight_maximum;
 };
 
-
 struct mosquitto {
 	mosq_sock_t sock;
 #ifndef WITH_BROKER
@@ -348,6 +347,13 @@ struct mosquitto {
 #endif
 	int nonce;
 	//double[] nonce;
+};
+
+// TEST - RPW.
+struct mosquitto_container {
+	struct mosquitto *message;
+	char *id;
+	int nonce;
 };
 
 #define STREMPTY(str) (str[0] == '\0')
