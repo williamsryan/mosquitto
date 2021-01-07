@@ -355,15 +355,6 @@ error_cleanup:
 	return rc;
 }
 
-// TEST - RPW.
-int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto_container container) {
-	// First do some work on the wrapper struct members.
-	// TODO.
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
-
-	return handle__connect(db, container.message);
-}
-
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
 	// New test for inserting logic for dynamic mutation.
