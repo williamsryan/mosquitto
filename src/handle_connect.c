@@ -361,7 +361,10 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto_container con
 	// TODO.
 	log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
 
-	return handle__connect(db, container.message);
+	if (container.nonce == 1337)
+		return handle__connect(db, container.message);
+
+	return 1;
 }
 
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
