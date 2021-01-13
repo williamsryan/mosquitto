@@ -367,7 +367,19 @@ error_cleanup:
     handle__connect2(db, context, id);
 }*/
 
-int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int version)
+// TEST - RPW.
+int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto_container container) {
+	// First do some work on the wrapper struct members.
+	// TODO.
+	log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
+
+	if (container.nonce == 1337)
+		return handle__connect(db, container.message);
+
+	return 1;
+}
+
+int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
 	char protocol_name[7];
 	uint8_t protocol_version;
@@ -400,11 +412,11 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int vers
 	}
 
 	/* Manually-created check for the added dummy transformation. */
-	if(version != 1337) {
+	/*if(version != 1337) {
 	    log__printf(NULL, MOSQ_LOG_NOTICE, "Client::Broker mismatch. Disconnecting.");
 	    // Ignore this for now.
 	    //goto handle_connect_error;
-	}
+	}*/
 
 	/* Don't accept multiple CONNECT commands. */
 	if(context->state != mosq_cs_new){

@@ -595,7 +595,7 @@ int net__tls_server_ctx(struct mosquitto__listener *listener);
  * ============================================================ */
 int handle__packet(struct mosquitto_db *db, struct mosquitto *context);
 int handle__connack(struct mosquitto_db *db, struct mosquitto *context);
-int handle__connect(struct mosquitto_db *db, struct mosquitto *context, int id);
+int handle__connect(struct mosquitto_db *db, struct mosquitto *context);
 int handle__disconnect(struct mosquitto_db *db, struct mosquitto *context);
 int handle__publish(struct mosquitto_db *db, struct mosquitto *context);
 int handle__subscribe(struct mosquitto_db *db, struct mosquitto *context);
