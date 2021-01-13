@@ -59,13 +59,13 @@
 
 # Build with systemd support. If enabled, mosquitto will notify systemd after
 # initialization. See README in service/systemd/ for more information.
-#WITH_SYSTEMD:=no
+WITH_SYSTEMD:=no
 
 # Build with SRV lookup support.
-#WITH_SRV:=no
+WITH_SRV:=no
 
 # Build with websockets support on the broker.
-#WITH_WEBSOCKETS:=no
+WITH_WEBSOCKETS:=no
 
 # Use elliptic keys in broker
 #WITH_EC:=yes
@@ -95,10 +95,7 @@ WITH_SHARED_LIBRARIES:=yes
 #WITH_BUNDLED_DEPS:=yes
 
 # Build with coverage options
-WITH_COVERAGE:=yes
-
-# Build with stateful debug statements/etc.
-WITH_RPW_DBG=yes
+#WITH_COVERAGE:=no
 
 # =============================================================================
 # End of user configuration
@@ -128,10 +125,8 @@ ifeq ($(UNAME),SunOS)
 		CFLAGS?=-Wall -ggdb -O2
 	endif
 else
-  	CC=clang
-	CFLAGS?=-Wall -ggdb #-fdump-tree-all-graph #-O2 #-L /home/ryan/git/klee/build/Debug+Asserts/lib -lkleeRuntest #-c -emit-llvm
-	#LDFLAGS:=$(LDFLAGS) -coverage
-	#LDADD:=$(LDADD) -lcunit
+	CC=clang
+	CFLAGS?=-Wall -ggdb -c -O0 -emit-llvm -fno-inline
 endif
 
 STATIC_LIB_DEPS:=
@@ -311,15 +306,10 @@ ifeq ($(WITH_BUNDLED_DEPS),yes)
 endif
 
 ifeq ($(WITH_COVERAGE),yes)
-	BROKER_CFLAGS:=$(BROKER_CFLAGS) -fprofile-arcs -ftest-coverage
+	BROKER_CFLAGS:=$(BROKER_CFLAGS) -coverage
 	BROKER_LDFLAGS:=$(BROKER_LDFLAGS) -coverage
-	LIB_CFLAGS:=$(LIB_CFLAGS) -fprofile-arcs -ftest-coverage
-	LIB_LDFLAGS:=$(LIB_LDFLAGS) -lgcov --coverage
-	CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -fprofile-arcs -ftest-coverage
+	LIB_CFLAGS:=$(LIB_CFLAGS) -coverage
+	LIB_LDFLAGS:=$(LIB_LDFLAGS) -coverage
+	CLIENT_CFLAGS:=$(CLIENT_CFLAGS) -coverage
 	CLIENT_LDFLAGS:=$(CLIENT_LDFLAGS) -coverage
-endif
-
-ifeq ($(WITH_RPW_DBG),yes)
-	BROKER_CFLAGS:=$(BROKER_CFLAGS) -DWITH_RPW_DBG
-	BROKER_CPPFLAGS:=$(BROKER_CPPFLAGS) -DWITH_RPW_DBG
 endif
