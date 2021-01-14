@@ -135,12 +135,12 @@ int packet__read_string(struct mosquitto__packet *packet, char **str, int *lengt
 	if(rc) return rc;
 	if(*length == 0) return MOSQ_ERR_SUCCESS;
 
-	if(mosquitto_validate_utf8(*str, *length)){
-		mosquitto__free(*str);
-		*str = NULL;
-		*length = -1;
-		return MOSQ_ERR_MALFORMED_UTF8;
-	}
+	// if(mosquitto_validate_utf8(*str, *length)){
+	// 	mosquitto__free(*str);
+	// 	*str = NULL;
+	// 	*length = -1;
+	// 	return MOSQ_ERR_MALFORMED_UTF8;
+	// }
 
 	return MOSQ_ERR_SUCCESS;
 }
