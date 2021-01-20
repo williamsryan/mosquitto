@@ -31,6 +31,14 @@ Contributors:
 #include "packet_mosq.h"
 #include "property_mosq.h"
 
+int simple_encrypt(int val) {
+	int key = 1234182;
+	// Simple XOR as a test.
+	int encrypted = val ^ key;
+
+	return encrypted;
+}
+
 int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session, const mosquitto_property *properties)
 {
 
@@ -135,11 +143,13 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	}
 
 	packet->command = CMD_CONNECT;
-	packet->remaining_length = headerlen + payloadlen;
+	int test = simple_encrypt(headerlen + payloadlen);
+	//packet->remaining_length = headerlen + payloadlen;
+	packet->remaining_length = test;
 	// Nonce below should be chosen dynamically.
 	// if (something):
 	//		nonce[something]
-	log__printf(mosq, MOSQ_LOG_NOTICE, "Header length: %d", headerlen);
+	/*log__printf(mosq, MOSQ_LOG_NOTICE, "Header length: %d", headerlen);
 	log__printf(mosq, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen);
 	if (payloadlen > 10) {
 		log__printf(mosq, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
@@ -147,7 +157,7 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	} else {
 		log__printf(mosq, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
 		packet->remaining_length = packet->remaining_length + nonce[2];
-	}
+	}*/
 
 	rc = packet__alloc(packet);
 	if(rc){
