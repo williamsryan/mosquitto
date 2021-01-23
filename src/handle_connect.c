@@ -387,7 +387,7 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	mcont.nonce = 1337;
 
 	//if (container.nonce == 1337)
-	return handle__connect(db, context);
+	return handle__connect(db, mcont.message);
 }
 
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
