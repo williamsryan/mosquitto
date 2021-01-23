@@ -33,10 +33,10 @@ Contributors:
 int handle__packet(struct mosquitto_db *db, struct mosquitto *context)
 {
 	if(!context) return MOSQ_ERR_INVAL;
-	struct mosquitto_container mcont;
-	mcont.id = "none";
-	mcont.message = context;
-	mcont.nonce = 1337;
+	// struct mosquitto_container mcont;
+	// mcont.id = "none";
+	// mcont.message = context;
+	// mcont.nonce = 1337;
 
 	switch((context->in_packet.command)&0xF0){
 		case CMD_PINGREQ:
@@ -54,7 +54,7 @@ int handle__packet(struct mosquitto_db *db, struct mosquitto *context)
 		case CMD_PUBREL:
 			return handle__pubrel(db, context);
 		case CMD_CONNECT:
-			return handle__connect_wrap(db, mcont);
+			return handle__connect_wrap(db, context);
 			//return handle__connect(db, context);
 		case CMD_DISCONNECT:
 			return handle__disconnect(db, context);

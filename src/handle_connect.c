@@ -365,15 +365,29 @@ int simple_decrypt(int val) {
 }
 
 // TEST - RPW.
-int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto_container container) {
+// int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto_container container) {
+// 	// First do some work on the wrapper struct members.
+// 	// TODO.
+// 	log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
+
+// 	//if (container.nonce == 1337)
+// 	return handle__connect(db, container.message);
+
+// 	//return 1;
+// }
+
+int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	// First do some work on the wrapper struct members.
 	// TODO.
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
+	//log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
+
+	struct mosquitto_container mcont;
+	mcont.id = "none";
+	mcont.message = context;
+	mcont.nonce = 1337;
 
 	//if (container.nonce == 1337)
-	return handle__connect(db, container.message);
-
-	//return 1;
+	return handle__connect(db, context);
 }
 
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
