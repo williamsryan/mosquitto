@@ -386,6 +386,10 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	mcont.message = context;
 	mcont.nonce = 1337;
 
+	int test_dec = simple_decrypt(context->in_packet.remaining_length);
+
+	log__printf(NULL, MOSQ_LOG_NOTICE, "TEST WRAPPER DECRYPTION: %d", test_dec);
+
 	//if (container.nonce == 1337)
 	return handle__connect(db, mcont.message);
 }
