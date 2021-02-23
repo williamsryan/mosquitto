@@ -364,33 +364,42 @@ int simple_decrypt(int val) {
 	return decrypted;
 }
 
-// TEST - RPW.
-// int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto_container container) {
-// 	// First do some work on the wrapper struct members.
-// 	// TODO.
-// 	log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
-
-// 	//if (container.nonce == 1337)
-// 	return handle__connect(db, container.message);
-
-// 	//return 1;
-// }
+//Tongwei: build a seperate function for nonce verfication.
+int nonce_verify(int changed_value, int nonce) {
+	if (changed_value-70 != nonce) {
+		return -1;
+	} else {
+		changed_value = (changed_value - nonce);
+		return changed_value;
+	}
+}
 
 int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
-	// First do some work on the wrapper struct members.
-	// TODO.
-	//log__printf(NULL, MOSQ_LOG_NOTICE, "Wrapper contains: %d", container.nonce);
 
 	struct mosquitto_container mcont;
 	mcont.id = "none";
 	mcont.message = context;
-	mcont.nonce = 1337;
+	// mcont.nonce = 1337;
 
-	int test_dec = simple_decrypt(context->in_packet.remaining_length);
+	int nonce_list[] = {1337, 28, 92, 65};
+	if (context->in_packet.remaining_length > 1000) {
+		mcont.nonce = nonce_list[0];
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", mcont.nonce);
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-mcont.nonce);
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-mcont.nonce));
+	} else {
+		mcont.nonce = nonce_list[2];
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", mcont.nonce);
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-mcont.nonce);
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-mcont.nonce));
+	}
 
-	log__printf(NULL, MOSQ_LOG_NOTICE, "TEST WRAPPER DECRYPTION: %d", test_dec);
+	// Tongwei: move decryption into wrapper.
+	context->in_packet.remaining_length = simple_decrypt(context->in_packet.remaining_length);
 
-	//if (container.nonce == 1337)
+	// Tongwei: move nonce verify into wrapper.
+	context->in_packet.remaining_length = nonce_verify(context->in_packet.remaining_length, mcont.nonce);
+
 	return handle__connect(db, mcont.message);
 }
 
@@ -408,34 +417,6 @@ int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 	//int payloadlen_test = context->in_packet.remaining_length;
 	//int payloadlen_test = context->in_packet.remaining_length - 10; // Header here is always 10.
 	// End test.
-
-	// TEST - RPW.
-	// Add something here to change the nonce index at a given 
-	// increment or something.
-	// END TEST - RPW.
-	
-	context->in_packet.remaining_length = simple_decrypt(context->in_packet.remaining_length);
-	log__printf(NULL, MOSQ_LOG_NOTICE, "Client sent: %d", context->in_packet.remaining_length);
-
-	/*log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (+nonce): %d", context->in_packet.remaining_length-10);
-	if (context->in_packet.remaining_length > 1000) {
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[0]);
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-nonce[0]);
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-nonce[0]));
-
-		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[0]);
-	} else {
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[2]);
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-nonce[2]);
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-nonce[2]));
-
-		context->in_packet.remaining_length = (context->in_packet.remaining_length - nonce[2]);
-	}*/
-	//log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", nonce[i%4]);
-	//log__printf(NULL, MOSQ_LOG_NOTICE, "Test value: %d", context->in_packet.remaining_length);
-	//if (context->in_packet.remaining_length-70 != nonce[i%4]) {
-	//	return -1;
-	//}
 
 	char protocol_name[7];
 	uint8_t protocol_version;

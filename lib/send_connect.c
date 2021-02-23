@@ -39,13 +39,21 @@ int simple_encrypt(int val) {
 	return encrypted;
 }
 
+// Tongwei: Do the nonce-based change.
+int change_static_value(int static_value){
+	int nonce[] = {1337, 28, 92, 65};
+	if (static_value > 10) {
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
+		static_value = static_value + nonce[0];
+	} else {
+		log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
+		static_value = static_value + nonce[2];
+	}
+	return static_value;
+}
+
 int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session, const mosquitto_property *properties)
 {
-
-	// New test for inserting logic for dynamic mutation.
-	int nonce[] = {1337, 28, 92, 65};
-	//mosq->nonce = [];
-	// End test.
 
 	struct mosquitto__packet *packet = NULL;
 	int payloadlen;
@@ -143,9 +151,16 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	}
 
 	packet->command = CMD_CONNECT;
-	int test = simple_encrypt(headerlen + payloadlen);
-	//packet->remaining_length = headerlen + payloadlen;
-	packet->remaining_length = test;
+
+
+
+	packet->remaining_length = headerlen + payloadlen;
+
+	// Tongwei: Test for fynamic mutation based on nonce.
+	// New test for inserting logic for dynamic mutation.
+	packet->remaining_length = change_static_value(packet->remaining_length);
+	packet->remaining_length = simple_encrypt(packet->remaining_length);
+	
 	// Nonce below should be chosen dynamically.
 	// if (something):
 	//		nonce[something]
