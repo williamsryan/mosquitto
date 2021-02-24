@@ -21,12 +21,12 @@
 # Disabling this will also mean that passwords must be stored in plain text. It
 # is strongly recommended that you only disable WITH_TLS if you are not using
 # password authentication at all.
-WITH_TLS:=yes
+#WITH_TLS:=yes
 
 # Comment out to disable TLS/PSK support in the broker and client. Requires
 # WITH_TLS=yes.
 # This must be disabled if using openssl < 1.0.
-WITH_TLS_PSK:=yes
+#WITH_TLS_PSK:=yes
 
 # Comment out to disable client threading support.
 #WITH_THREADING:=yes
@@ -35,7 +35,7 @@ WITH_TLS_PSK:=yes
 # to connect to other brokers and subscribe/publish to topics. You probably
 # want to leave this included unless you want to save a very small amount of
 # memory size and CPU time.
-WITH_BRIDGE:=yes
+#WITH_BRIDGE:=yes
 
 # Comment out to remove persistent database support from the broker. This
 # allows the broker to store retained messages and durable subscriptions to a
@@ -65,7 +65,7 @@ WITH_SYSTEMD:=no
 WITH_SRV:=no
 
 # Build with websockets support on the broker.
-WITH_WEBSOCKETS:=yes
+#WITH_WEBSOCKETS:=yes
 
 # Use elliptic keys in broker
 #WITH_EC:=yes
