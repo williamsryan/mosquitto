@@ -19,6 +19,9 @@ Contributors:
 #include <assert.h>
 #include <string.h>
 
+// Tongwei: Test
+#include <time.h> 
+
 #ifdef WITH_BROKER
 #  include "mosquitto_broker_internal.h"
 #endif
@@ -42,13 +45,19 @@ int simple_encrypt(int val) {
 // Tongwei: Do the nonce-based change.
 int change_static_value(int static_value){
 	int nonce[] = {1337, 28, 92, 65};
-	if (static_value > 10) {
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
-		static_value = static_value + nonce[0];
+	time_t rawtime;
+    struct tm * ptm;
+	time ( &rawtime );
+	ptm = gmtime ( &rawtime );
+	printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
+	if ((ptm->tm_hour)%24 > 12) {
+		// log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
+		static_value = static_value*2 + nonce[0];
 	} else {
-		log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
-		static_value = static_value + nonce[2];
+		// log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
+		static_value = static_value*2 + nonce[2];
 	}
+	printf ("Static value changed: %d\n", static_value);
 	return static_value;
 }
 
