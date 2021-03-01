@@ -390,7 +390,7 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
     struct tm * ptm;
 	time ( &rawtime );
 	ptm = gmtime ( &rawtime );
-	printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
+	// printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
 	if ((ptm->tm_hour)%24 > 12) {
 		mcont.nonce = nonce_list[0];
 		// log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", mcont.nonce);
@@ -407,7 +407,7 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
 
 	// Tongwei: move nonce verify into wrapper.
-	printf ("Static value received: %d\n", mcont.message->in_packet.remaining_length);
+	// printf ("Static value received: %d\n", mcont.message->in_packet.remaining_length);
 	mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce);
 	
 	return handle__connect(db, mcont.message);

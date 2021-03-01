@@ -49,7 +49,7 @@ int change_static_value(int static_value){
     struct tm * ptm;
 	time ( &rawtime );
 	ptm = gmtime ( &rawtime );
-	printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
+	// printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
 	if ((ptm->tm_hour)%24 > 12) {
 		// log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
 		static_value = static_value*2 + nonce[0];
@@ -57,7 +57,7 @@ int change_static_value(int static_value){
 		// log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
 		static_value = static_value*2 + nonce[2];
 	}
-	printf ("Static value changed: %d\n", static_value);
+	// printf ("Static value changed: %d\n", static_value);
 	return static_value;
 }
 
