@@ -382,32 +382,22 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	struct mosquitto_container mcont;
 	mcont.id = "none";
 	mcont.message = context;
-	
-	// mcont.nonce = 1337;
 
 	int nonce_list[] = {1337, 28, 92, 65};
 	time_t rawtime;
     struct tm * ptm;
 	time ( &rawtime );
 	ptm = gmtime ( &rawtime );
-	// printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
 	if ((ptm->tm_hour)%24 > 12) {
 		mcont.nonce = nonce_list[0];
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", mcont.nonce);
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-mcont.nonce);
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-mcont.nonce));
 	} else {
 		mcont.nonce = nonce_list[2];
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Broker checking: %d", mcont.nonce);
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Payload length (-nonce): %d", (context->in_packet.remaining_length-10)-mcont.nonce);
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Client nonce: %d", -1*((context->in_packet.remaining_length-10) - (context->in_packet.remaining_length-10)-mcont.nonce));
 	}
 
 	// Tongwei: move decryption into wrapper.
 	mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
 
 	// Tongwei: move nonce verify into wrapper.
-	// printf ("Static value received: %d\n", mcont.message->in_packet.remaining_length);
 	mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce);
 	
 	return handle__connect(db, mcont.message);
@@ -415,18 +405,6 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
-	// New test for inserting logic for dynamic mutation.
-	//int nonce[] = {1337, 28, 92, 65};
-	//int i = 0;
-	// remaining_length = 2 * (headerlen + payloadlen) + nonce[0]
-	// 1407 = 2(header + pay) + nonce[0]
-	// 70 = 2(header + pay)
-	// 35 = header + pay
-	// pay = 35 - headerlen.
-	//int payloadlen_test = ((context->in_packet.remaining_length-nonce[0])/2) - 10;
-	//int payloadlen_test = context->in_packet.remaining_length;
-	//int payloadlen_test = context->in_packet.remaining_length - 10; // Header here is always 10.
-	// End test.
 
 	char protocol_name[7];
 	uint8_t protocol_version;

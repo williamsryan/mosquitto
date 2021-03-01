@@ -51,13 +51,10 @@ int change_static_value(int static_value){
 	ptm = gmtime ( &rawtime );
 	// printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
 	if ((ptm->tm_hour)%24 > 12) {
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
 		static_value = static_value*2 + nonce[0];
 	} else {
-		// log__printf(NULL, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
 		static_value = static_value*2 + nonce[2];
 	}
-	// printf ("Static value changed: %d\n", static_value);
 	return static_value;
 }
 
@@ -169,19 +166,6 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 	// New test for inserting logic for dynamic mutation.
 	packet->remaining_length = change_static_value(packet->remaining_length);
 	packet->remaining_length = simple_encrypt(packet->remaining_length);
-	
-	// Nonce below should be chosen dynamically.
-	// if (something):
-	//		nonce[something]
-	/*log__printf(mosq, MOSQ_LOG_NOTICE, "Header length: %d", headerlen);
-	log__printf(mosq, MOSQ_LOG_NOTICE, "Payload length: %d", payloadlen);
-	if (payloadlen > 10) {
-		log__printf(mosq, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[0]);
-		packet->remaining_length = packet->remaining_length + nonce[0];
-	} else {
-		log__printf(mosq, MOSQ_LOG_NOTICE, "Sending nonce: %d", nonce[2]);
-		packet->remaining_length = packet->remaining_length + nonce[2];
-	}*/
 
 	rc = packet__alloc(packet);
 	if(rc){
