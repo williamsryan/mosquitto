@@ -368,8 +368,8 @@ int simple_decrypt(int val) {
 }
 
 //Tongwei: build a seperate function for nonce verfication.
-int nonce_verify(int changed_value, int nonce) {
-	if (changed_value-70 != nonce) {
+int nonce_verify(int changed_value, int nonce, int doub_value) {
+	if (changed_value-doub_value != nonce) {
 		return -1;
 	} else {
 		changed_value = (changed_value - nonce)/2;
@@ -394,12 +394,14 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 		mcont.nonce = nonce_list[2];
 	}
 
-	// Tongwei: move decryption into wrapper.
-	mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
+	if(MUTATION_FLAG > 0){
+		// Tongwei: move decryption into wrapper.
+		// mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
 
-	// Tongwei: move nonce verify into wrapper.
-	mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce);
-	
+		// Tongwei: move nonce verify into wrapper.
+		mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce, 70);
+	}
+
 	return handle__connect(db, mcont.message);
 }
 
