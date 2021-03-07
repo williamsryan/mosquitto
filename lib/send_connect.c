@@ -35,25 +35,34 @@ Contributors:
 #include "property_mosq.h"
 
 int simple_encrypt(int val) {
-	int key = 1234182;
-	// Simple XOR as a test.
-	int encrypted = val ^ key;
+	
+	struct Aloja_container mcont;
+	mcont.flag = 10;
+	if(mcont.flag > 0){
+		int key = 1234182;
+		// Simple XOR as a test.
+		val = val ^ key;
+	}
 
-	return encrypted;
+	return val;
 }
 
 // Tongwei: Do the nonce-based change.
 int change_static_value(int static_value){
-	int nonce[] = {1337, 28, 92, 65};
-	time_t rawtime;
-    struct tm * ptm;
-	time ( &rawtime );
-	ptm = gmtime ( &rawtime );
-	// printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
-	if ((ptm->tm_hour)%24 > 12) {
-		static_value = static_value*2 + nonce[0];
-	} else {
-		static_value = static_value*2 + nonce[2];
+	struct Aloja_container mcont;
+	mcont.flag = 10;
+	if(mcont.flag > 0){
+		int nonce[] = {1337, 28, 92, 65};
+		time_t rawtime;
+		struct tm * ptm;
+		time ( &rawtime );
+		ptm = gmtime ( &rawtime );
+		// printf ("UTC Time :  %d\n", (ptm->tm_hour)%24);
+		if ((ptm->tm_hour)%24 > 12) {
+			static_value = static_value*2 + nonce[0];
+		} else {
+			static_value = static_value*2 + nonce[2];
+		}
 	}
 	return static_value;
 }
@@ -162,13 +171,13 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 
 	packet->remaining_length = headerlen + payloadlen;
 
-	// Tongwei: Test the flag.
-	if(MUTATION_FLAG > 0){
-		// Tongwei: Test for fynamic mutation based on nonce.
-		// New test for inserting logic for dynamic mutation.
-		packet->remaining_length = change_static_value(packet->remaining_length);
-		// packet->remaining_length = simple_encrypt(packet->remaining_length);
-	}
+	// Tongwei: Test for fynamic mutation based on nonce.
+	// New test for inserting logic for dynamic mutation.
+	packet->remaining_length = change_static_value(packet->remaining_length);
+
+	// New test for inserting logic for dynamic mutation.
+	// packet->remaining_length = change_static_value(packet->remaining_length);
+	packet->remaining_length = simple_encrypt(packet->remaining_length);
 
 	
 	rc = packet__alloc(packet);

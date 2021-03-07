@@ -379,9 +379,10 @@ int nonce_verify(int changed_value, int nonce, int doub_value) {
 
 int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 
-	struct mosquitto_container mcont;
+	struct Aloja_container mcont;
 	mcont.id = "none";
 	mcont.message = context;
+	mcont.flag = 10;
 
 	int nonce_list[] = {1337, 28, 92, 65};
 	time_t rawtime;
@@ -393,14 +394,18 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	} else {
 		mcont.nonce = nonce_list[2];
 	}
-
-	if(MUTATION_FLAG > 0){
+	
+	if(mcont.flag > 0){
 		// Tongwei: move decryption into wrapper.
 		// mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
 
 		// Tongwei: move nonce verify into wrapper.
 		mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce, 70);
 	}
+	// if(mcont.flag > 0){
+	// 	// Tongwei: move decryption into wrapper.
+	// 	mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
+	// }
 
 	return handle__connect(db, mcont.message);
 }

@@ -350,10 +350,11 @@ struct mosquitto {
 };
 
 // TEST - RPW.
-struct mosquitto_container {
+struct Aloja_container {
 	struct mosquitto *message;
 	char *id;
 	int nonce;
+	int flag;
 };
 
 // Tongwei: The flag test
