@@ -171,13 +171,9 @@ int send__connect(struct mosquitto *mosq, uint16_t keepalive, bool clean_session
 
 	packet->remaining_length = headerlen + payloadlen;
 
-	// Tongwei: Test for fynamic mutation based on nonce.
-	// New test for inserting logic for dynamic mutation.
+	// Function call for Aloja mutations.
 	packet->remaining_length = change_static_value(packet->remaining_length);
-
-	// New test for inserting logic for dynamic mutation.
-	// packet->remaining_length = change_static_value(packet->remaining_length);
-	packet->remaining_length = simple_encrypt(packet->remaining_length);
+	// packet->remaining_length = simple_encrypt(packet->remaining_length);
 
 	
 	rc = packet__alloc(packet);

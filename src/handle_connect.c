@@ -396,14 +396,9 @@ int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
 	}
 	
 	if(mcont.flag > 0){
-		// Tongwei: move decryption into wrapper.
-		// mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
-
-		// Tongwei: move nonce verify into wrapper.
 		mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce, 70);
 	}
 	// if(mcont.flag > 0){
-	// 	// Tongwei: move decryption into wrapper.
 	// 	mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
 	// }
 
