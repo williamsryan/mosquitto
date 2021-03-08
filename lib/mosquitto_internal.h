@@ -357,9 +357,6 @@ struct Aloja_container {
 	int flag;
 };
 
-// Tongwei: The flag test
-#define MUTATION_FLAG 10
-
 #define STREMPTY(str) (str[0] == '\0')
 
 void do_client_disconnect(struct mosquitto *mosq, int reason_code, const mosquitto_property *properties);
