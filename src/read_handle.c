@@ -54,8 +54,8 @@ int handle__packet(struct mosquitto_db *db, struct mosquitto *context)
 		case CMD_PUBREL:
 			return handle__pubrel(db, context);
 		case CMD_CONNECT:
-			return handle__connect_wrap(db, context);
-			// return handle__connect(db, context);
+			// return handle__connect_wrap(db, context);
+			return handle__connect(db, context);
 		case CMD_DISCONNECT:
 			return handle__disconnect(db, context);
 		case CMD_SUBSCRIBE:

@@ -350,12 +350,11 @@ struct mosquitto {
 };
 
 // TEST - RPW.
-// struct Aloja_container {
-// 	struct mosquitto *message;
-// 	char *id;
-// 	int nonce;
-// 	int flag;
-// };
+struct Aloja_container {
+	char *id;
+	int nonce;
+	int flag;
+};
 
 #define STREMPTY(str) (str[0] == '\0')
 

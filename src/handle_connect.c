@@ -358,52 +358,48 @@ error_cleanup:
 	return rc;
 }
 
-// int simple_decrypt(int val) {
-// 	int key = 1234182;
-// 	// Simple XOR as a test.
-// 	//int encrypted = val ^ key;
-// 	int decrypted = val ^ key;
+// Tongwei: Aloja without slicing
+int simple_decrypt(int val) {
+	int key = 1234182;
+	// Simple XOR as a test.
+	//int encrypted = val ^ key;
+	int decrypted = val ^ key;
 
-// 	return decrypted;
-// }
+	return decrypted;
+}
 
-// //Tongwei: build a seperate function for nonce verfication.
-// int nonce_verify(int changed_value, int nonce, int doub_value) {
-// 	if (changed_value-doub_value != nonce) {
-// 		return -1;
-// 	} else {
-// 		changed_value = (changed_value - nonce)/2;
-// 		return changed_value;
-// 	}
-// }
+//Tongwei: build a seperate function for nonce verfication.
+int nonce_verify(int changed_value, int nonce) {
+	changed_value = (changed_value - nonce)/2;
+	return changed_value;
+}
 
-// int handle__connect_wrap(struct mosquitto_db *db, struct mosquitto *context) {
+int Aloja_Wrapper_Function(int changed_value) {
 
-// 	struct Aloja_container mcont;
-// 	mcont.id = "none";
-// 	mcont.message = context;
-// 	mcont.flag = 10;
+	struct Aloja_container mcont;
+	mcont.id = "none";
+	mcont.flag = 10;
 
-// 	int nonce_list[] = {1337, 28, 92, 65};
-// 	time_t rawtime;
-//     struct tm * ptm;
-// 	time ( &rawtime );
-// 	ptm = gmtime ( &rawtime );
-// 	if ((ptm->tm_hour)%24 > 12) {
-// 		mcont.nonce = nonce_list[0];
-// 	} else {
-// 		mcont.nonce = nonce_list[2];
-// 	}
+	int nonce_list[] = {1337, 28, 92, 65};
+	time_t rawtime;
+    struct tm * ptm;
+	time ( &rawtime );
+	ptm = gmtime ( &rawtime );
+	if ((ptm->tm_hour)%24 > 12) {
+		mcont.nonce = nonce_list[0];
+	} else {
+		mcont.nonce = nonce_list[2];
+	}
 	
-// 	if(mcont.flag > 0){
-// 		mcont.message->in_packet.remaining_length = nonce_verify(mcont.message->in_packet.remaining_length, mcont.nonce, 70);
-// 	}
-// 	// if(mcont.flag > 0){
-// 	// 	mcont.message->in_packet.remaining_length = simple_decrypt(mcont.message->in_packet.remaining_length);
-// 	// }
+	if(mcont.flag > 0){
+		changed_value = nonce_verify(changed_value, mcont.nonce);
+	}
+	// if(mcont.flag > 0){
+	// 	changed_value = simple_decrypt(changed_value);
+	// }
 
-// 	return handle__connect(db, mcont.message);
-// }
+	return changed_value;
+}
 
 int handle__connect(struct mosquitto_db *db, struct mosquitto *context)
 {
