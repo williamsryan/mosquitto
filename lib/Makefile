@@ -91,7 +91,7 @@ clean :
 	$(MAKE) -C cpp clean
 
 libmosquitto.so.${SOVERSION} : ${MOSQ_OBJS}
-	llvm-link-10 $^ -o $@
+	llvm-link $^ -o $@
 
 libmosquitto.a : ${MOSQ_OBJS}
 	${CROSS_COMPILE}$(AR) cr $@ $^

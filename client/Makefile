@@ -30,13 +30,13 @@ static_rr : rr_client.bc client_props.bc client_shared.bc pub_shared.bc sub_clie
 	${CROSS_COMPILE}${CC} $^ -o mosquitto_rr ${CLIENT_LDFLAGS} ${STATIC_LIB_DEPS}
 
 mosquitto_pub : pub_client.bc pub_shared.bc client_shared.bc client_props.bc
-	llvm-link-10 $^ -o $@ $(CLIENT_LDADD)
+	llvm-link $^ -o $@ $(CLIENT_LDADD)
 
 mosquitto_sub : sub_client.bc sub_client_output.bc client_shared.bc client_props.bc
-	llvm-link-10 $^ -o $@ $(CLIENT_LDADD)
+	llvm-link $^ -o $@ $(CLIENT_LDADD)
 
 mosquitto_rr : rr_client.bc client_shared.bc client_props.bc pub_shared.bc sub_client_output.bc
-	llvm-link-10 $^ -o $@ $(CLIENT_LDADD)
+	llvm-link $^ -o $@ $(CLIENT_LDADD)
 
 pub_client.bc : pub_client.c ${SHARED_DEP}
 	${CROSS_COMPILE}${CC} $(CLIENT_CPPFLAGS) $(CLIENT_CFLAGS) -c $< -o $@
