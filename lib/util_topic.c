@@ -55,9 +55,11 @@ int mosquitto_pub_topic_check(const char *str)
 	int hier_count = 0;
 #endif
 
+	// This is patch code.
 	if(str == NULL){
 		return MOSQ_ERR_INVAL;
 	}
+	// End patch code.
 
 	while(str && str[0]){
 		if(str[0] == '+' || str[0] == '#'){
@@ -85,10 +87,15 @@ int mosquitto_pub_topic_check2(const char *str, size_t len)
 #ifdef WITH_BROKER
 	int hier_count = 0;
 #endif
+	// Pre-patch.
+	// if(len > 65535) return MOSQ_ERR_INVAL;
+	// End pre-patch.
 
+	// Patch code.
 	if(str == NULL || len > 65535){
 		return MOSQ_ERR_INVAL;
 	}
+	// End patch code.
 
 	for(i=0; i<len; i++){
 		if(str[i] == '+' || str[i] == '#'){
@@ -122,11 +129,17 @@ int mosquitto_sub_topic_check(const char *str)
 	int hier_count = 0;
 #endif
 
+	// Pre-patch code.
+	// while(str && str[0]){
+	// End pre-patch code.
+
+	// Patch code.
 	if(str == NULL){
 		return MOSQ_ERR_INVAL;
 	}
 
 	while(str[0]){
+	// End patch code.
 		if(str[0] == '+'){
 			if((c != '\0' && c != '/') || (str[1] != '\0' && str[1] != '/')){
 				return MOSQ_ERR_INVAL;
@@ -161,9 +174,15 @@ int mosquitto_sub_topic_check2(const char *str, size_t len)
 	int hier_count = 0;
 #endif
 
+	// Pre-patch code.
+	// if(len > 65535) return MOSQ_ERR_INVAL;
+	// End pre-patch code.
+
+	// Patch code.
 	if(str == NULL || len > 65535){
 		return MOSQ_ERR_INVAL;
 	}
+	// End patch code.
 
 	for(i=0; i<len; i++){
 		if(str[i] == '+'){
