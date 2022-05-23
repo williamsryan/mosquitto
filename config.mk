@@ -148,6 +148,7 @@ ifeq ($(UNAME),SunOS)
 		CFLAGS?=-Wall -ggdb -O2
 	endif
 else
+	CC=clang
 	CFLAGS?=-Wall -c -emit-llvm
 endif
 
