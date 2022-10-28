@@ -43,6 +43,7 @@ MOSQ_OBJS=mosquitto.o \
 		  utf8_mosq.o \
 		  util_mosq.o \
 		  util_topic.o \
+		  PC_logger.o \
 		  will_mosq.o
 
 ALL_DEPS:=
@@ -223,3 +224,5 @@ util_topic.o : util_topic.c util_mosq.h
 will_mosq.o : will_mosq.c will_mosq.h
 	${CROSS_COMPILE}$(CC) $(LIB_CPPFLAGS) $(LIB_CFLAGS) -c $< -o $@
 
+PC_logger.o : PC_logger.c PC_logger.h
+	${CROSS_COMPILE}$(CC) $(LIB_CPPFLAGS) $(LIB_CFLAGS) -c $< -o $@

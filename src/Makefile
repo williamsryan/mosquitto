@@ -75,6 +75,7 @@ OBJS=	mosquitto.o \
 		util_topic.o \
 		websockets.o \
 		will_delay.o \
+		PC_logger.o \
 		will_mosq.o
 
 mosquitto : ${OBJS}
@@ -280,6 +281,9 @@ plugin_defer.so : plugin_defer.c mosquitto_plugin.h mosquitto_broker.h mosquitto
 
 plugin_debug.so : plugin_debug.c mosquitto_plugin.h mosquitto_broker.h mosquitto_broker_internal.h
 	${CROSS_COMPILE}${CC} -I. -I../lib -fPIC -shared $< -o $@
+
+PC_logger.o : ../lib/PC_logger.c ../lib/PC_logger.h
+	${CROSS_COMPILE}${CC} $(BROKER_CPPFLAGS) $(BROKER_CFLAGS) -c $< -o $@
 
 install : all
 	$(INSTALL) -d "${DESTDIR}$(prefix)/sbin"
